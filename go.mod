@@ -1,4 +1,4 @@
-module rkeeper2advantshop
+module rkeeper-advantshop
 
 go 1.18
 

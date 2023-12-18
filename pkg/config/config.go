@@ -6,7 +6,7 @@ import (
 	"io"
 	"log"
 	"os"
-	check "rkeeper2advantshop/pkg/license"
+	check "rkeeper-advantshop/pkg/license"
 	"sync"
 )
 

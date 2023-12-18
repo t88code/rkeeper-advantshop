@@ -26,12 +26,12 @@ type Customer struct {
 }
 
 type GetBonusesResult struct {
-	CardId    int    `json:"cardId"`
-	Amount    int    `json:"amount"`
-	Percent   int    `json:"percent"`
-	GradeName string `json:"gradeName"`
-	GradeId   int    `json:"gradeId"`
-	IsBlocked bool   `json:"isBlocked"`
-	Status    string `json:"status"`
-	Errors    string `json:"errors"`
+	CardId    int     `json:"cardId"`
+	Amount    float64 `json:"amount"`
+	Percent   float64 `json:"percent"`
+	GradeName string  `json:"gradeName"`
+	GradeId   int     `json:"gradeId"`
+	IsBlocked bool    `json:"isBlocked"`
+	Status    string  `json:"status"`
+	Errors    string  `json:"errors"`
 }

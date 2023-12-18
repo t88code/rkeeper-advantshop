@@ -22,7 +22,7 @@ func (s *CustomersService) Get(customersParams ...CustomersParam) (getCustomersR
 }
 
 func (s *CustomersService) GetBonuses(id string) (getBonusesResult *GetBonusesResult, err error) {
-	r, err := s.httpClient.R().Get(fmt.Sprintf("/api/%s/bonuses", id))
+	r, err := s.httpClient.R().Get(fmt.Sprintf("/api/customers/%s/bonuses", id))
 	if err != nil {
 		return
 	}

@@ -5,12 +5,13 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"log"
 	"net/http"
-	"rkeeper2advantshop/internal/handler"
-	"rkeeper2advantshop/pkg/advantshop"
-	"rkeeper2advantshop/pkg/config"
-	check "rkeeper2advantshop/pkg/license"
-	"rkeeper2advantshop/pkg/logging"
-	_ "rkeeper2advantshop/pkg/telegram"
+	"rkeeper-advantshop/internal/handler"
+	"rkeeper-advantshop/pkg/advantshop"
+	"rkeeper-advantshop/pkg/config"
+	check "rkeeper-advantshop/pkg/license"
+	"rkeeper-advantshop/pkg/logging"
+	"rkeeper-advantshop/pkg/telegram"
+	_ "rkeeper-advantshop/pkg/telegram"
 	"time"
 )
 
@@ -22,7 +23,7 @@ func main() {
 	check.Check()
 	cfg := config.GetConfig()
 
-	//go telegram.BotStart()
+	go telegram.BotStart()
 
 	_, err := advantshop.NewClient(cfg) // todo contex
 	if err != nil {
@@ -33,6 +34,7 @@ func main() {
 	router.GET("/GetCardInfoEx", handler.GetCardInfoEx)
 	router.GET("/FindByEmail", handler.FindByEmail)
 	router.POST("/TransactionsEx", handler.TransactionsEx)
+	//router.POST("/Update", handler.UpdateDiscount) TODO ручку для обновления скидок-грейдов
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", cfg.SERVICE.PORT), RequestLogger{h: router, l: logger}))
 }

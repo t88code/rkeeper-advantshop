@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
-	"rkeeper2advantshop/pkg/advantshop"
-	"rkeeper2advantshop/pkg/logging"
-	"rkeeper2advantshop/pkg/telegram"
+	"rkeeper-advantshop/pkg/advantshop"
+	"rkeeper-advantshop/pkg/logging"
+	"rkeeper-advantshop/pkg/telegram"
 )
 
 func GetCardInfoEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -57,10 +57,10 @@ func GetCardInfoEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 						card.AccountNum = getBonusesResult.CardId
 						card.DiscountNum = getBonusesResult.GradeId
 						card.MaxDiscountAmount = 9000000000
-						card.AmountOnSubAccount1 = getBonusesResult.Amount
-						card.Comment = fmt.Sprintf("Информация о клиенте") // TODO
-						card.ScreenComment = fmt.Sprintf("Текущий уровень: %s",
-							getBonusesResult.GradeName) // TODO
+						card.AmountOnSubAccount1 = RoundFloat64ToInt(getBonusesResult.Amount) * 100
+						card.Comment = fmt.Sprintf("Информация о клиенте")
+						card.ScreenComment = fmt.Sprintf("Код карты: %d\nТекущий уровень: %s",
+							getBonusesResult.CardId, getBonusesResult.GradeName) // TODO согласовать сообщение
 					}
 				}
 			}

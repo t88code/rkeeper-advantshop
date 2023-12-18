@@ -11,7 +11,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"rkeeper2advantshop/pkg/logging"
+	"rkeeper-advantshop/pkg/logging"
 	"time"
 )
 

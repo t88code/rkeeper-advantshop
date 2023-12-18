@@ -7,8 +7,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/pkg/errors"
 	"os"
-	"rkeeper2advantshop/pkg/config"
-	"rkeeper2advantshop/pkg/logging"
+	"rkeeper-advantshop/pkg/config"
+	"rkeeper-advantshop/pkg/logging"
 )
 
 // TODO переделать на DB структуру

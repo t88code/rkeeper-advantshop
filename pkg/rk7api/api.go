@@ -9,9 +9,9 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"rkeeper2advantshop/pkg/config"
-	"rkeeper2advantshop/pkg/logging"
-	"rkeeper2advantshop/pkg/rk7api/models"
+	"rkeeper-advantshop/pkg/config"
+	"rkeeper-advantshop/pkg/logging"
+	"rkeeper-advantshop/pkg/rk7api/models"
 	"strings"
 	"time"
 )

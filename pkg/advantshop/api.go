@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	"net/url"
-	"rkeeper2advantshop/pkg/config"
-	"rkeeper2advantshop/pkg/logging"
-	"rkeeper2advantshop/pkg/telegram"
+	"rkeeper-advantshop/pkg/config"
+	"rkeeper-advantshop/pkg/logging"
+	"rkeeper-advantshop/pkg/telegram"
 	"strings"
 	"time"
 )

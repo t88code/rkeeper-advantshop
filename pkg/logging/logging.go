@@ -6,7 +6,7 @@ import (
 	"io"
 	"log"
 	"os"
-	"rkeeper2advantshop/pkg/config"
+	"rkeeper-advantshop/pkg/config"
 )
 
 var logMain = logrus.New()

@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	"rkeeper2advantshop/pkg/telegram"
+	"rkeeper-advantshop/pkg/telegram"
 )
 
 func errorInternalServerError(w http.ResponseWriter, errorText string) {

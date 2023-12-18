@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/google/uuid"
 	"golang.org/x/text/encoding/charmap"
+	"math"
 	"regexp"
 	"strings"
 )
@@ -38,4 +39,8 @@ func GetFullName(FirstName, LastName, MiddleName string) string {
 		return strings.Join(fullName, " ")
 	}
 	return ""
+}
+
+func RoundFloat64ToInt(float64 float64) int {
+	return int(math.Round(float64*100) / 100)
 }
