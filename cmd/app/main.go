@@ -17,7 +17,7 @@ import (
 
 func main() {
 	logger := logging.GetLogger()
-	logger.Info("Start service Advantshop Integrations v1.0") // todo version
+	logger.Info("Start service RestoCRM")
 	defer logger.Info("End Main")
 
 	check.Check()

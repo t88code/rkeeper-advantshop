@@ -1,12 +1,21 @@
 package handler
 
 import (
+	"encoding/json"
 	"github.com/google/uuid"
 	"golang.org/x/text/encoding/charmap"
 	"math"
 	"regexp"
 	"strings"
 )
+
+func PrettyStruct(data interface{}) (string, error) {
+	val, err := json.MarshalIndent(data, "", "    ")
+	if err != nil {
+		return "", err
+	}
+	return string(val), nil
+}
 
 func IsValidUUID(u string) bool {
 	_, err := uuid.Parse(u)

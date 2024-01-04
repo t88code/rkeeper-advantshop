@@ -23,14 +23,18 @@ type (
 			PORT int
 		}
 		ADVANTSHOP struct {
-			URL          string
-			ApiKey       string
-			Username     string
-			Password     string
-			RPS          int
-			Timeout      int
-			ApiKeyExpire int
-			PointOfSales int
+			URL                     string
+			ApiKey                  string
+			Username                string
+			Password                string
+			RPS                     int
+			Timeout                 int
+			ApiKeyExpire            int
+			OrderPrefix             string
+			OrderSource             string
+			Currency                string
+			BonusCost               int
+			CheckOrderItemAvailable bool
 		}
 		RK7REF struct {
 			URL  string
