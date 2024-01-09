@@ -249,14 +249,13 @@ func GetDbUsers() (map[int64]User, error) {
 }
 
 //запуск сервиса telegram bot
-func BotStart() {
+func BotStart(logger *logging.Logger, dbname string) {
 
-	logger := logging.GetLoggerWithSeviceName("telegram")
-	logger.Info("BotStart:>Start")
-	defer logger.Info("BotStart:>End")
+	logger.Info("[telegram bot]: start")
+	defer logger.Info("[telegram bot]: end")
 
-	if Exists("telegram.db") != true {
-		logger.Info("BotStart.DB:>telegram.db not exist")
+	if Exists(dbname) != true {
+		logger.Debugf("[telegram bot]: %s not exist", dbname)
 		err := CreateDB()
 		if err != nil {
 			logger.Fatalf("BotStart.DB.Error:>Not create telegram.db, %v", err)

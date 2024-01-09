@@ -4,111 +4,35 @@ import (
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"io"
-	"log"
 	"os"
-	"rkeeper-advantshop/pkg/config"
 )
 
-var logMain = logrus.New()
-var logTelegram = logrus.New()
+var loggers = make(map[string]*logrus.Logger)
 
-type Logger struct {
-	*logrus.Logger
-}
-
-func GetLogger() *Logger {
-	return &Logger{
-		Logger: logMain,
+func GetLogger(loggerName string) *logrus.Logger {
+	if logger, ok := loggers[loggerName]; ok {
+		return logger
 	}
+	return nil
 }
 
-func GetLoggerWithSeviceName(Service string) *Logger {
-	cfg := config.GetConfig()
-
-	switch Service {
-	case "main":
-		file, err := os.OpenFile("logs/main.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0640)
+func NewLogger(debug bool, filename string, prefix string) (*logrus.Logger, error) {
+	if _, err := os.Stat("./logs"); os.IsNotExist(err) {
+		err := os.MkdirAll("logs", 0770)
 		if err != nil {
-			fmt.Println(err)
+			return nil, err
 		}
-		multiWriter := io.MultiWriter(file, os.Stdout)
-		logMain.Out = multiWriter
-		logMain.Formatter = &logrus.TextFormatter{
-			ForceColors:               true,
-			DisableColors:             false,
-			ForceQuote:                false,
-			DisableQuote:              false,
-			EnvironmentOverrideColors: false,
-			DisableTimestamp:          false,
-			FullTimestamp:             true,
-			TimestampFormat:           "2006-01-02 15:04:05",
-			DisableSorting:            false,
-			SortingFunc:               nil,
-			DisableLevelTruncation:    false,
-			PadLevelText:              false,
-			QuoteEmptyFields:          false,
-			FieldMap:                  nil,
-			CallerPrettyfier:          nil,
-		}
-		if cfg.LOG.Debug {
-			logMain.Level = logrus.DebugLevel
-		} else {
-			logMain.Level = logrus.InfoLevel
-		}
-		return &Logger{
-			Logger: logMain,
-		}
-	case "telegram":
-		file, err := os.OpenFile("logs/telegram.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0640)
-		if err != nil {
-			fmt.Println(err)
-		}
-		multiWriter := io.MultiWriter(file, os.Stdout)
-		logTelegram.Out = multiWriter
-		logTelegram.Formatter = &logrus.TextFormatter{
-			ForceColors:               true,
-			DisableColors:             false,
-			ForceQuote:                false,
-			DisableQuote:              false,
-			EnvironmentOverrideColors: false,
-			DisableTimestamp:          false,
-			FullTimestamp:             true,
-			TimestampFormat:           "2006-01-02 15:04:05",
-			DisableSorting:            false,
-			SortingFunc:               nil,
-			DisableLevelTruncation:    false,
-			PadLevelText:              false,
-			QuoteEmptyFields:          false,
-			FieldMap:                  nil,
-			CallerPrettyfier:          nil,
-		}
-		if cfg.TELEGRAM.Debug == 1 {
-			logTelegram.Level = logrus.DebugLevel
-		} else {
-			logTelegram.Level = logrus.InfoLevel
-		}
-		return &Logger{
-			Logger: logTelegram,
-		}
-	default:
-		return nil
 	}
-}
-
-func init() {
-	err := os.MkdirAll("logs", 0770)
+	file, err := os.OpenFile(
+		fmt.Sprintf("logs/%s", filename),
+		os.O_CREATE|os.O_APPEND|os.O_WRONLY,
+		0640)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
-
-	cfg := config.GetConfig()
-	file, err := os.OpenFile("logs/main.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0640)
-	if err != nil {
-		log.Fatal(err)
-	}
-	multiWriter := io.MultiWriter(file, os.Stdout)
-	logMain.Out = multiWriter
-	logMain.Formatter = &logrus.TextFormatter{
+	logger := logrus.New()
+	logger.Out = io.MultiWriter(file, os.Stdout)
+	logger.Formatter = &logrus.TextFormatter{
 		ForceColors:               true,
 		DisableColors:             false,
 		ForceQuote:                false,
@@ -125,9 +49,13 @@ func init() {
 		FieldMap:                  nil,
 		CallerPrettyfier:          nil,
 	}
-	if cfg.LOG.Debug {
-		logMain.Level = logrus.DebugLevel
+
+	logger.WithField("prefix", prefix)
+	if debug {
+		logger.Level = logrus.DebugLevel
 	} else {
-		logMain.Level = logrus.InfoLevel
+		logger.Level = logrus.InfoLevel
 	}
+
+	return logger, nil
 }

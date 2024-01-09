@@ -16,6 +16,9 @@ import (
 )
 
 func main() {
+
+	logging.NewLogger(true, "main.log", "main")
+
 	logger := logging.GetLogger()
 	logger.Info("Start service RestoCRM")
 	defer logger.Info("End Main")
@@ -23,7 +26,10 @@ func main() {
 	check.Check()
 	cfg := config.GetConfig()
 
-	go telegram.BotStart()
+	go telegram.BotStart(
+		logging.GetLoggerWithSeviceName("telegram"),
+		"telegram.db",
+	)
 
 	_, err := advantshop.NewClient(cfg) // todo contex
 	if err != nil {
