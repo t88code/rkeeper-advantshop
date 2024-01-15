@@ -1,11 +1,12 @@
-package advantshop
+package maxma
 
 import (
 	"encoding/json"
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	"net/url"
-	"rkeeper-advantshop/pkg/config"
+	"rkeeper-advantshop/internal/handler"
+	"rkeeper-advantshop/pkg/crm"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
 	"strings"
@@ -39,7 +40,7 @@ type Advantshop struct {
 type service struct {
 	debug      bool            // Is debug mode
 	logger     *logging.Logger // Log
-	httpClient *resty.Client   // HTTP client
+	httpClient *resty.Client   // HTTP crm
 }
 
 type services struct {
@@ -49,20 +50,23 @@ type services struct {
 	Categories CategoriesService
 }
 
-// NewClient - конструктор клиента для Advantshop
-func NewClient(config *config.Config) (*Advantshop, error) {
-	logger := logging.GetLogger()
+func (a *Advantshop) GetClient(cardNumber string) (*handler.Card, error) {
 
+	return nil, nil
+}
+
+// NewClient - конструктор клиента для Advantshop
+func NewClient(apiurl string, apikey string, rps int, timeout int, logger *logging.Logger, debug bool) (crm.API, error) {
 	advantshop = &Advantshop{
-		Debug:            config.LOG.Debug,
+		Debug:            debug,
 		Logger:           logger,
-		ApiKey:           config.ADVANTSHOP.ApiKey,
+		ApiKey:           apikey,
 		LastQueryRunTime: time.Now(),
-		RPS:              config.ADVANTSHOP.RPS,
+		RPS:              rps,
 	}
 
-	if config.ADVANTSHOP.Timeout < 2 {
-		config.ADVANTSHOP.Timeout = 2
+	if timeout < 2 {
+		timeout = 2
 	}
 
 	httpClient := resty.New().
@@ -72,15 +76,15 @@ func NewClient(config *config.Config) (*Advantshop, error) {
 				return r.IsError()
 			}).
 		SetLogger(logger).
-		SetDebug(config.LOG.Debug).
-		SetBaseURL(strings.TrimRight(config.ADVANTSHOP.URL, "/")).
+		SetDebug(debug).
+		SetBaseURL(strings.TrimRight(apiurl, "/")).
 		SetHeaders(map[string]string{
 			"Content-Type": "application/json",
 			"Accept":       "text/plain",
 			"User-Agent":   UserAgent,
 		}).
 		SetAllowGetMethodPayload(true).
-		SetTimeout(time.Duration(config.ADVANTSHOP.Timeout) * time.Second).
+		SetTimeout(time.Duration(timeout) * time.Second).
 		OnBeforeRequest(func(client *resty.Client, request *resty.Request) (err error) {
 			client.SetQueryParam("apikey", advantshop.ApiKey)
 			// RPS
@@ -103,14 +107,14 @@ func NewClient(config *config.Config) (*Advantshop, error) {
 			return
 		})
 
-	if config.LOG.Debug {
+	if debug {
 		httpClient.EnableTrace()
 	}
 
 	httpClient.JSONMarshal = json.Marshal
 	httpClient.JSONUnmarshal = json.Unmarshal
 	xService := service{
-		debug:      config.LOG.Debug,
+		debug:      debug,
 		logger:     logger,
 		httpClient: httpClient,
 	}
@@ -123,6 +127,6 @@ func NewClient(config *config.Config) (*Advantshop, error) {
 	return advantshop, nil
 }
 
-func GetClient() *Advantshop {
+func GetClient() crm.API {
 	return advantshop
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"io/ioutil"
 	"net/http"
-	"rkeeper-advantshop/pkg/advantshop"
+	advantshop2 "rkeeper-advantshop/pkg/crm/advantshop"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
 )
@@ -49,10 +49,10 @@ func TransactionsEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 	}
 	logger.Debugln(prettyStruct)
 
-	clientAdvantshop := advantshop.GetClient()
+	clientAdvantshop := advantshop2.GetClient()
 
-	order := advantshop.Order{
-		OrderCustomer: advantshop.OrderCustomer{
+	order := advantshop2.Order{
+		OrderCustomer: advantshop2.OrderCustomer{
 			Phone: Transaction.EXTINFO.INTERFACES.INTERFACE.HOLDERS.ITEM[0].Cardcode,
 		},
 		OrderPrefix:     fmt.Sprintf("%s-", Transaction.CHECKDATA.Checknum), // CHECKDATA:
@@ -111,7 +111,7 @@ func TransactionsEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 	}
 
 	for _, line := range Transaction.CHECKDATA.CHECKLINES.LINE {
-		order.OrderItems = append(order.OrderItems, advantshop.OrderItem{
+		order.OrderItems = append(order.OrderItems, advantshop2.OrderItem{
 			ArtNo:  line.Code,
 			Name:   line.Name,
 			Price:  line.Price,

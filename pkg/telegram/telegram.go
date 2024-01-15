@@ -7,7 +7,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/pkg/errors"
 	"os"
-	"rkeeper-advantshop/pkg/config"
 	"rkeeper-advantshop/pkg/logging"
 )
 
@@ -22,11 +21,11 @@ type User struct {
 var bot *tgbotapi.BotAPI
 
 func SendMessageToTelegramWithLogError(errorText string) {
-	logger := logging.GetLogger()
+	logger, err := logging.GetLogger("telegram")
 	logger.Println("Start SendMessageToTelegramWithLogError")
 	defer logger.Println("End SendMessageToTelegramWithLogError")
 	logger.Error(errorText)
-	err := SendMessage(errorText)
+	err = SendMessage(errorText)
 	if err != nil {
 		logger.Errorf("Не удалось отправить сообщение в телеграм: error: %v", err)
 		// tODO оправить на почту
@@ -36,7 +35,10 @@ func SendMessageToTelegramWithLogError(errorText string) {
 // отправить сообщение в телеграм юзерам из DB
 func SendMessage(messageText string) error {
 
-	logger := logging.GetLoggerWithSeviceName("telegram")
+	logger, err := logging.GetLogger("telegram")
+	if err != nil {
+		return err
+	}
 	logger.Info("Bot.Send:>Start")
 	defer logger.Info("Bot.Send:>End")
 
@@ -115,7 +117,10 @@ func Exists(name string) bool {
 // создание базы для телеграм
 func CreateDB() error {
 
-	logger := logging.GetLoggerWithSeviceName("telegram")
+	logger, err := logging.GetLogger("telegram")
+	if err != nil {
+		return err
+	}
 	logger.Info("CreateDB:>Start")
 	defer logger.Info("CreateDB:>End")
 
@@ -164,7 +169,10 @@ func CreateDB() error {
 // добавить пользователся в db
 func InsertDbUsers(user *User, db *sql.DB) error {
 
-	logger := logging.GetLoggerWithSeviceName("telegram")
+	logger, err := logging.GetLogger("telegram")
+	if err != nil {
+		return err
+	}
 	logger.Info("InsertDbUsers:>Start")
 	defer logger.Info("InsertDbUsers:>End")
 	// выполняем Insert
@@ -186,7 +194,10 @@ func InsertDbUsers(user *User, db *sql.DB) error {
 // обновить статус пользователя
 func UpdateStatusDbUsers(user *User, db *sql.DB) error {
 
-	logger := logging.GetLoggerWithSeviceName("telegram")
+	logger, err := logging.GetLogger("telegram")
+	if err != nil {
+		return err
+	}
 	logger.Info("UpdateStatusDbUsers:>Start")
 	defer logger.Info("UpdateStatusDbUsers:>End")
 
@@ -206,7 +217,10 @@ func UpdateStatusDbUsers(user *User, db *sql.DB) error {
 //получить users из db
 func GetDbUsers() (map[int64]User, error) {
 
-	logger := logging.GetLoggerWithSeviceName("telegram")
+	logger, err := logging.GetLogger("telegram")
+	if err != nil {
+		return nil, err
+	}
 	logger.Info("GetDbUsers:>Start")
 	defer logger.Info("GetDbUsers:>End")
 
@@ -249,7 +263,7 @@ func GetDbUsers() (map[int64]User, error) {
 }
 
 //запуск сервиса telegram bot
-func BotStart(logger *logging.Logger, dbname string) {
+func BotStart(logger *logging.Logger, dbname string, token string, debug bool) {
 
 	logger.Info("[telegram bot]: start")
 	defer logger.Info("[telegram bot]: end")
@@ -278,13 +292,17 @@ func BotStart(logger *logging.Logger, dbname string) {
 		}
 	}(db)
 
+	bot, err = tgbotapi.NewBotAPI(token)
+	if err != nil {
+		logger.Panicf("failed init, error: %v", err)
+	}
+
 	err = tgbotapi.SetLogger(logger)
 	if err != nil {
 		logger.Fatalf("BotStart.tgbotapi.Setlogger.Print:>%v", err)
 	}
 
-	cfg := config.GetConfig()
-	if cfg.TELEGRAM.Debug == 0 {
+	if debug {
 		bot.Debug = false
 	} else {
 		bot.Debug = true
@@ -365,20 +383,4 @@ func BotStart(logger *logging.Logger, dbname string) {
 		}
 		logger.Info(users)
 	}
-}
-
-func init() {
-
-	logger := logging.GetLoggerWithSeviceName("telegram")
-	logger.Info("init telegram bot:>Start")
-	defer logger.Info("init telegram bot:>End")
-
-	var err error
-	cfg := config.GetConfig()
-
-	bot, err = tgbotapi.NewBotAPI(cfg.TELEGRAM.BotToken)
-	if err != nil {
-		logger.Panicf("failed init, error: %v", err)
-	}
-
 }

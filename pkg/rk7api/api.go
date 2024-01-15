@@ -228,7 +228,10 @@ func (r *rk7api) GetOrderList() (*models.RK7QueryResultGetOrderList, error) {
 
 func (r *rk7api) SaveOrder(Visit int, Guid string, StationCode int, Dishs *[]models.Dish, Prepay *models.Prepay) (*models.RK7QueryResultSaveOrder, error) {
 
-	logger := logging.GetLogger()
+	logger, err := logging.GetLogger("main")
+	if err != nil {
+		return nil, err
+	}
 	logger.Println("SaveOrder Start")
 	defer logger.Println("SaveOrde End")
 
@@ -492,7 +495,10 @@ func (r *rk7api) SetRefDataCateglist(categlistItems []*models.Categlist) (*model
 // Send Отправка запроса в API XML RK7
 func Send(url, user, pass string, data []byte) (respBody []byte, e error) {
 
-	logger := logging.GetLogger()
+	logger, err := logging.GetLogger("main")
+	if err != nil {
+		return nil, err
+	}
 	logger.Println("SendToApiRk7:>Start")
 	defer logger.Println("SendToApiRk7:>End")
 

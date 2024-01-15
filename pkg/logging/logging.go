@@ -7,16 +7,20 @@ import (
 	"os"
 )
 
-var loggers = make(map[string]*logrus.Logger)
-
-func GetLogger(loggerName string) *logrus.Logger {
-	if logger, ok := loggers[loggerName]; ok {
-		return logger
-	}
-	return nil
+type Logger struct {
+	*logrus.Logger
 }
 
-func NewLogger(debug bool, filename string, prefix string) (*logrus.Logger, error) {
+var loggers = make(map[string]*Logger)
+
+func GetLogger(loggerName string) (*Logger, error) {
+	if l, ok := loggers[loggerName]; ok {
+		return l, nil
+	}
+	return nil, fmt.Errorf("not found logger: %s", loggerName)
+}
+
+func NewLogger(debug bool, filename string, prefix string, loggerName string) (*Logger, error) {
 	if _, err := os.Stat("./logs"); os.IsNotExist(err) {
 		err := os.MkdirAll("logs", 0770)
 		if err != nil {
@@ -30,9 +34,14 @@ func NewLogger(debug bool, filename string, prefix string) (*logrus.Logger, erro
 	if err != nil {
 		return nil, err
 	}
-	logger := logrus.New()
-	logger.Out = io.MultiWriter(file, os.Stdout)
-	logger.Formatter = &logrus.TextFormatter{
+
+	if logger, ok := loggers[loggerName]; ok {
+		return logger, nil
+	}
+
+	l := logrus.New()
+	l.Out = io.MultiWriter(file, os.Stdout)
+	l.Formatter = &logrus.TextFormatter{
 		ForceColors:               true,
 		DisableColors:             false,
 		ForceQuote:                false,
@@ -49,13 +58,12 @@ func NewLogger(debug bool, filename string, prefix string) (*logrus.Logger, erro
 		FieldMap:                  nil,
 		CallerPrettyfier:          nil,
 	}
-
-	logger.WithField("prefix", prefix)
+	l.WithField("prefix", prefix)
 	if debug {
-		logger.Level = logrus.DebugLevel
+		l.Level = logrus.DebugLevel
 	} else {
-		logger.Level = logrus.InfoLevel
+		l.Level = logrus.InfoLevel
 	}
 
-	return logger, nil
+	return &Logger{l}, nil
 }

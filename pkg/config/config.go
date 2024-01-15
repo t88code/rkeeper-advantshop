@@ -14,7 +14,7 @@ type (
 	Config struct {
 		TELEGRAM struct {
 			BotToken string
-			Debug    int
+			Debug    bool
 		}
 		LOG struct {
 			Debug bool
@@ -23,6 +23,20 @@ type (
 			PORT int
 		}
 		ADVANTSHOP struct {
+			URL                     string
+			ApiKey                  string
+			Username                string
+			Password                string
+			RPS                     int
+			Timeout                 int
+			ApiKeyExpire            int
+			OrderPrefix             string
+			OrderSource             string
+			Currency                string
+			BonusCost               int
+			CheckOrderItemAvailable bool
+		}
+		MAXMA struct {
 			URL                     string
 			ApiKey                  string
 			Username                string

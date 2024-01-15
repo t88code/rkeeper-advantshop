@@ -66,7 +66,7 @@ func (x *xmlInterface) GetLicenseIdByAnchor() error {
 
 		resp, err := client.Do(req)
 		if err != nil {
-			return errors.Wrap(err, "ошибка при выполнении client.Do")
+			return errors.Wrap(err, "ошибка при выполнении crm.Do")
 		}
 		defer func(Body io.ReadCloser) {
 			err := Body.Close()

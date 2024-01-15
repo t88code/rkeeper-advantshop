@@ -6,7 +6,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"regexp"
-	"rkeeper-advantshop/pkg/advantshop"
+	"rkeeper-advantshop/pkg/crm/advantshop"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
 	"strconv"

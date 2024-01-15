@@ -3,46 +3,86 @@ package main
 import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
-	"log"
 	"net/http"
 	"rkeeper-advantshop/internal/handler"
-	"rkeeper-advantshop/pkg/advantshop"
 	"rkeeper-advantshop/pkg/config"
+	"rkeeper-advantshop/pkg/crm"
 	check "rkeeper-advantshop/pkg/license"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
-	_ "rkeeper-advantshop/pkg/telegram"
 	"time"
 )
 
 func main() {
 
-	logging.NewLogger(true, "main.log", "main")
+	loggerMain, err := logging.NewLogger(
+		true,
+		"main.log",
+		"main",
+		"main")
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	logger := logging.GetLogger()
-	logger.Info("Start service RestoCRM")
-	defer logger.Info("End Main")
+	loggerMain.Info("Start service RestoCRM")
+	defer loggerMain.Info("End Main")
+
+	loggerTelegram, err := logging.NewLogger(
+		true,
+		"telegram.log",
+		"telegram",
+		"telegram")
+	if err != nil {
+		loggerMain.Fatal(err)
+	}
 
 	check.Check()
 	cfg := config.GetConfig()
 
 	go telegram.BotStart(
-		logging.GetLoggerWithSeviceName("telegram"),
+		loggerTelegram,
 		"telegram.db",
-	)
+		cfg.TELEGRAM.BotToken,
+		cfg.TELEGRAM.Debug)
 
-	_, err := advantshop.NewClient(cfg) // todo contex
-	if err != nil {
-		logger.Fatal(err)
+	apiName := "advantshop"
+
+	switch apiName {
+	case "advantshop":
+		_, err = crm.NewAPI(
+			"advantshop",
+			crm.Advantshop(
+				cfg.ADVANTSHOP.URL,
+				cfg.ADVANTSHOP.ApiKey,
+				cfg.ADVANTSHOP.RPS,
+				cfg.ADVANTSHOP.Timeout,
+				loggerMain,
+				cfg.LOG.Debug))
+		if err != nil {
+			return
+		}
+	case "maxma":
+		_, err = crm.NewAPI(
+			"maxma",
+			crm.Maxma(
+				cfg.MAXMA.URL,
+				cfg.MAXMA.ApiKey,
+				cfg.MAXMA.RPS,
+				cfg.MAXMA.Timeout,
+				loggerMain,
+				cfg.LOG.Debug))
+		if err != nil {
+			return
+		}
 	}
-	router := httprouter.New()
 
+	router := httprouter.New()
 	router.GET("/GetCardInfoEx", handler.GetCardInfoEx)
 	router.GET("/FindByEmail", handler.FindByEmail)
 	router.POST("/TransactionsEx", handler.TransactionsEx)
 	//router.POST("/Update", handler.UpdateDiscount) TODO ручку для обновления скидок-грейдов
 
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", cfg.SERVICE.PORT), RequestLogger{h: router, l: logger}))
+	loggerMain.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", cfg.SERVICE.PORT), RequestLogger{h: router, l: loggerMain}))
 }
 
 type RequestLogger struct {
