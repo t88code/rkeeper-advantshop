@@ -2,13 +2,13 @@ package crm
 
 import (
 	"fmt"
-	"rkeeper-advantshop/internal/handler"
+	"rkeeper-advantshop/internal/handler/models"
 	"rkeeper-advantshop/pkg/crm/advantshop"
 	"rkeeper-advantshop/pkg/crm/maxma"
 )
 
 type API interface {
-	GetClient(cardNumber string) (*handler.Card, error)
+	GetClient(cardNumber string) (*models.Card, error)
 }
 
 var api API

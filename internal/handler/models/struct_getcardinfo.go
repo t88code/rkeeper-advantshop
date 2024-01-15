@@ -1,4 +1,4 @@
-package handler
+package models
 
 type Card struct {
 	IsDeleted           bool   `json:"isDeleted"`           // Карта существовала, но была удалена

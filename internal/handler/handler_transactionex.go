@@ -6,6 +6,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"io/ioutil"
 	"net/http"
+	"rkeeper-advantshop/internal/handler/models"
 	advantshop2 "rkeeper-advantshop/pkg/crm/advantshop"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
@@ -13,11 +14,14 @@ import (
 
 func TransactionsEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	// TODO несколько транзакций одновременно
-	logger := logging.GetLogger()
+	logger, err := logging.GetLogger("main")
+	if err != nil {
+		return
+	}
 	logger.Println("Start handler TransactionsEx")
 	defer logger.Println("End handler TransactionsEx")
 
-	err := r.ParseForm()
+	err = r.ParseForm()
 	if err != nil {
 		errorInternalServerError(w, "TransactionsEx:"+err.Error())
 		return
@@ -30,7 +34,7 @@ func TransactionsEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 		return
 	}
 
-	Transaction := new(Transaction)
+	Transaction := new(models.Transaction)
 	err = xml.Unmarshal(respBody, Transaction)
 	if err != nil {
 		errorInternalServerError(w, "TransactionsEx:"+fmt.Sprintf("failed xml.Unmarshal(respBody, Transaction), error: %v", err))
@@ -45,7 +49,7 @@ func TransactionsEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 
 	prettyStruct, err := PrettyStruct(Transaction)
 	if err != nil {
-		logger.Errorf("failed in pretty struct, error: %v", err)
+		logger.Errorf("failed in pretty models, error: %v", err)
 	}
 	logger.Debugln(prettyStruct)
 

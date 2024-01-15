@@ -39,7 +39,10 @@ var xmlI *xmlInterface
 
 // получении ID лицензии
 func (x *xmlInterface) GetLicenseIdByAnchor() error {
-	logger := logging.GetLogger()
+	logger, err := logging.GetLogger("main")
+	if err != nil {
+		return err
+	}
 	logger.Println("Start GetLicenseIdByAnchor")
 	defer logger.Println("End GetLicenseIdByAnchor")
 
@@ -117,10 +120,12 @@ func (x *xmlInterface) GetLicenseIdByAnchor() error {
 }
 
 func NewXmlInterface(UserName, Password, Token, ProductID, GUID string, RestCode int, URL string) (*xmlInterface, error) {
-	logger := logging.GetLogger()
+	logger, err := logging.GetLogger("main")
+	if err != nil {
+		return nil, err
+	}
 	logger.Println("Start NewXmlInterface")
 	defer logger.Println("End NewXmlInterface")
-	var err error
 
 	if UserName == "" {
 		return nil, errors.New("не указан UserName")
@@ -168,11 +173,14 @@ func NewXmlInterface(UserName, Password, Token, ProductID, GUID string, RestCode
 }
 
 func GetXmlInterface() (*xmlInterface, error) {
-	logger := logging.GetLogger()
+	logger, err := logging.GetLogger("main")
+	if err != nil {
+		return nil, err
+	}
 	logger.Println("Start GetXmlInterface")
 	defer logger.Println("End GetXmlInterface")
 
-	err := xmlI.GetLicenseIdByAnchor()
+	err = xmlI.GetLicenseIdByAnchor()
 	if err != nil {
 		return nil, errors.Wrap(err, "failed in xmlI.GetLicenseIdByAnchor()")
 	}
@@ -186,11 +194,12 @@ func GetXmlInterface() (*xmlInterface, error) {
 
 func GenUsr(UserName, Password, Token string) (string, error) {
 
-	logger := logging.GetLogger()
+	logger, err := logging.GetLogger("main")
+	if err != nil {
+		return "", err
+	}
 	logger.Println("GenUsr:>Start")
 	defer logger.Println("GenUsr:>End")
-
-	var err error
 
 	hUserNameAndPassword := md5.New()
 	logger.Debugf("Username: %s", UserName)

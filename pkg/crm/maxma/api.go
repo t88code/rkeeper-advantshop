@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	"net/url"
-	"rkeeper-advantshop/internal/handler"
-	"rkeeper-advantshop/pkg/crm"
+	"rkeeper-advantshop/internal/handler/models"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
 	"strings"
@@ -50,13 +49,13 @@ type services struct {
 	Categories CategoriesService
 }
 
-func (a *Advantshop) GetClient(cardNumber string) (*handler.Card, error) {
+func (a *Advantshop) GetClient(cardNumber string) (*models.Card, error) {
 
 	return nil, nil
 }
 
 // NewClient - конструктор клиента для Advantshop
-func NewClient(apiurl string, apikey string, rps int, timeout int, logger *logging.Logger, debug bool) (crm.API, error) {
+func NewClient(apiurl string, apikey string, rps int, timeout int, logger *logging.Logger, debug bool) (*Advantshop, error) {
 	advantshop = &Advantshop{
 		Debug:            debug,
 		Logger:           logger,
@@ -127,6 +126,6 @@ func NewClient(apiurl string, apikey string, rps int, timeout int, logger *loggi
 	return advantshop, nil
 }
 
-func GetClient() crm.API {
+func GetClient() *Advantshop {
 	return advantshop
 }

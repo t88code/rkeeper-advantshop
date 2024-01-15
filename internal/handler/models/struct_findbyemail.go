@@ -1,4 +1,4 @@
-package handler
+package models
 
 type EmailInfo struct {
 	AccountNum int    `json:"accountNum"` // Номер счета

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
+	"rkeeper-advantshop/internal/handler/models"
 	"rkeeper-advantshop/pkg/crm"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
@@ -23,7 +24,7 @@ func GetCardInfoEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 		errorInternalServerError(w, "GetCardInfoEx:"+err.Error())
 		return
 	}
-	var card *Card
+	var card *models.Card
 	if r.Form.Has("card") {
 		cardNumber := r.Form.Get("card")
 		if IsValidPHONE(cardNumber) {

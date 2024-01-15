@@ -6,6 +6,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"regexp"
+	"rkeeper-advantshop/internal/handler/models"
 	"rkeeper-advantshop/pkg/crm/advantshop"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
@@ -18,18 +19,21 @@ const (
 )
 
 func FindByEmail(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	logger := logging.GetLogger()
+	logger, err := logging.GetLogger("main")
+	if err != nil {
+		return
+	}
 	logger.Info("Start FindByEmail")
 	defer logger.Info("End FindByEmail")
 
-	err := r.ParseForm()
+	err = r.ParseForm()
 	if err != nil {
 		telegram.SendMessageToTelegramWithLogError("FindByEmail:" + err.Error())
 		fmt.Fprint(w, "Error")
 		return
 	}
 
-	var emailInfo EmailInfo
+	var emailInfo models.EmailInfo
 	clientLogus := advantshop.GetClient()
 
 	if cardno, ok := r.Form["email"]; ok {
