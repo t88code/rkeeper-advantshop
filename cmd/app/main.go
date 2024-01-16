@@ -7,6 +7,7 @@ import (
 	"rkeeper-advantshop/internal/handler"
 	"rkeeper-advantshop/pkg/config"
 	"rkeeper-advantshop/pkg/crm"
+	"rkeeper-advantshop/pkg/crm/options/api"
 	check "rkeeper-advantshop/pkg/license"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
@@ -36,22 +37,28 @@ func main() {
 		loggerMain.Fatal(err)
 	}
 
+	loggerConfig, err := logging.NewLogger(
+		true,
+		"config.log",
+		"config",
+		"config")
+	if err != nil {
+		loggerMain.Fatal(err)
+	}
+
 	check.Check()
-	cfg := config.GetConfig()
-
-	go telegram.BotStart(
-		loggerTelegram,
-		"telegram.db",
-		cfg.TELEGRAM.BotToken,
-		cfg.TELEGRAM.Debug)
-
 	apiName := "advantshop"
+
+	cfg, err := config.GetConfig(loggerConfig, apiName)
+	if err != nil {
+		loggerMain.Fatal(err)
+	}
 
 	switch apiName {
 	case "advantshop":
 		_, err = crm.NewAPI(
 			"advantshop",
-			crm.Advantshop(
+			api.Advantshop(
 				cfg.ADVANTSHOP.URL,
 				cfg.ADVANTSHOP.ApiKey,
 				cfg.ADVANTSHOP.RPS,
@@ -59,12 +66,12 @@ func main() {
 				loggerMain,
 				cfg.LOG.Debug))
 		if err != nil {
-			return
+			loggerMain.Fatal(err)
 		}
 	case "maxma":
 		_, err = crm.NewAPI(
 			"maxma",
-			crm.Maxma(
+			api.Maxma(
 				cfg.MAXMA.URL,
 				cfg.MAXMA.ApiKey,
 				cfg.MAXMA.RPS,
@@ -72,9 +79,15 @@ func main() {
 				loggerMain,
 				cfg.LOG.Debug))
 		if err != nil {
-			return
+			loggerMain.Fatal(err)
 		}
 	}
+
+	go telegram.BotStart(
+		loggerTelegram,
+		"telegram.db",
+		cfg.TELEGRAM.BotToken,
+		cfg.TELEGRAM.Debug)
 
 	router := httprouter.New()
 	router.GET("/GetCardInfoEx", handler.GetCardInfoEx)

@@ -13318,3 +13318,369 @@ BODY         :
 [36mINFO[0m[2024-01-05 00:28:31] End SendMessageToTelegramWithLogError        
 [36mINFO[0m[2024-01-05 00:28:31] End handler TransactionsEx                   
 [36mINFO[0m[2024-01-05 00:28:31] Completed POST /TransactionsEx in 179.366833ms 
+[36mINFO[0m[2024-01-16 17:08:41] Start service RestoCRM                       
+[36mINFO[0m[2024-01-16 17:08:41] End Main                                     
+[36mINFO[0m[2024-01-16 17:09:40] Start service RestoCRM                       
+[36mINFO[0m[2024-01-16 17:09:40] End Main                                     
+[36mINFO[0m[2024-01-16 17:10:33] Start service RestoCRM                       
+[31mFATA[0m[2024-01-16 17:10:33] Config:>Failed to parse gcfg data: warnings:
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP" 
+[36mINFO[0m[2024-01-16 17:11:36] Start service RestoCRM                       
+[31mFATA[0m[2024-01-16 17:12:08] Config:>Failed to parse gcfg data: warnings:
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP" 
+[36mINFO[0m[2024-01-16 17:12:09] Start service RestoCRM                       
+[31mFATA[0m[2024-01-16 17:14:32] Config:>Failed to parse gcfg data: warnings:
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP"
+can't store data at section "ADVANTSHOP" 
+[36mINFO[0m[2024-01-16 17:15:11] Start service RestoCRM                       
+[31mFATA[0m[2024-01-16 17:15:20] failed appName: advantshop                   
+[36mINFO[0m[2024-01-16 17:16:15] Start service RestoCRM                       
+[31mFATA[0m[2024-01-16 17:16:54] failed appName: advantshop                   
+[36mINFO[0m[2024-01-16 17:19:22] Start service RestoCRM                       
+[36mINFO[0m[2024-01-16 17:19:22] End Main                                     
+[36mINFO[0m[2024-01-16 17:20:00] Start service RestoCRM                       
+[36mINFO[0m[2024-01-16 17:20:00] End Main                                     
+[36mINFO[0m[2024-01-16 17:20:10] Start service RestoCRM                       
+[36mINFO[0m[2024-01-16 17:21:33] End Main                                     
+[36mINFO[0m[2024-01-16 17:21:36] Start service RestoCRM                       
+[37mDEBU[0m[2024-01-16 17:54:24] Started GET /GetCardInfoEx                   
+[37mDEBU[0m[2024-01-16 17:54:24] Request: &{GET /GetCardInfoEx?card=79631087654 HTTP/1.1 1 1 map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] {} <nil> 0 [] false 192.168.0.15:8000 map[] map[] <nil> map[] 192.168.0.22:60518 /GetCardInfoEx?card=79631087654 <nil> <nil> <nil> 0x14000301a80} 
+[37mDEBU[0m[2024-01-16 17:54:24] Method: GET                                  
+[37mDEBU[0m[2024-01-16 17:54:24] Host: 192.168.0.15:8000                      
+[37mDEBU[0m[2024-01-16 17:54:24] URL: /GetCardInfoEx?card=79631087654         
+[37mDEBU[0m[2024-01-16 17:54:24] RequestURI: /GetCardInfoEx?card=79631087654  
+[37mDEBU[0m[2024-01-16 17:54:24] path: /GetCardInfoEx                         
+[37mDEBU[0m[2024-01-16 17:54:24] Form: map[]                                  
+[37mDEBU[0m[2024-01-16 17:54:24] MultipartForm: <nil>                         
+[37mDEBU[0m[2024-01-16 17:54:24] ContentLength: 0                             
+[37mDEBU[0m[2024-01-16 17:54:24] Header: map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] 
+[36mINFO[0m[2024-01-16 17:54:24] Completed GET /GetCardInfoEx in 3.24675ms    
+[36mINFO[0m[2024-01-16 22:28:14] Start service RestoCRM                       
+[37mDEBU[0m[2024-01-16 22:31:00] Started GET /GetCardInfoEx                   
+[37mDEBU[0m[2024-01-16 22:31:00] Request: &{GET /GetCardInfoEx?card=79631087654 HTTP/1.1 1 1 map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] {} <nil> 0 [] false 192.168.0.15:8000 map[] map[] <nil> map[] 192.168.0.23:50307 /GetCardInfoEx?card=79631087654 <nil> <nil> <nil> 0x140001af900} 
+[37mDEBU[0m[2024-01-16 22:31:00] Method: GET                                  
+[37mDEBU[0m[2024-01-16 22:31:00] Host: 192.168.0.15:8000                      
+[37mDEBU[0m[2024-01-16 22:31:00] URL: /GetCardInfoEx?card=79631087654         
+[37mDEBU[0m[2024-01-16 22:31:00] RequestURI: /GetCardInfoEx?card=79631087654  
+[37mDEBU[0m[2024-01-16 22:31:00] path: /GetCardInfoEx                         
+[37mDEBU[0m[2024-01-16 22:31:00] Form: map[]                                  
+[37mDEBU[0m[2024-01-16 22:31:00] MultipartForm: <nil>                         
+[37mDEBU[0m[2024-01-16 22:31:00] ContentLength: 0                             
+[37mDEBU[0m[2024-01-16 22:31:00] Header: map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] 
+[36mINFO[0m[2024-01-16 22:31:00] Completed GET /GetCardInfoEx in 479.875µs    
+[36mINFO[0m[2024-01-16 22:31:51] Start service RestoCRM                       
+[37mDEBU[0m[2024-01-16 22:32:20] Started GET /GetCardInfoEx                   
+[37mDEBU[0m[2024-01-16 22:32:20] Request: &{GET /GetCardInfoEx?card=79631087654 HTTP/1.1 1 1 map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] {} <nil> 0 [] false 192.168.0.15:8000 map[] map[] <nil> map[] 192.168.0.23:50389 /GetCardInfoEx?card=79631087654 <nil> <nil> <nil> 0x14000208540} 
+[37mDEBU[0m[2024-01-16 22:32:20] Method: GET                                  
+[37mDEBU[0m[2024-01-16 22:32:20] Host: 192.168.0.15:8000                      
+[37mDEBU[0m[2024-01-16 22:32:20] URL: /GetCardInfoEx?card=79631087654         
+[37mDEBU[0m[2024-01-16 22:32:20] RequestURI: /GetCardInfoEx?card=79631087654  
+[37mDEBU[0m[2024-01-16 22:32:20] path: /GetCardInfoEx                         
+[37mDEBU[0m[2024-01-16 22:32:20] Form: map[]                                  
+[37mDEBU[0m[2024-01-16 22:32:20] MultipartForm: <nil>                         
+[37mDEBU[0m[2024-01-16 22:32:20] ContentLength: 0                             
+[37mDEBU[0m[2024-01-16 22:32:20] Header: map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] 
+[36mINFO[0m[2024-01-16 22:32:20] Completed GET /GetCardInfoEx in 1.357333ms   
+[36mINFO[0m[2024-01-16 22:32:31] Start service RestoCRM                       
+[36mINFO[0m[2024-01-16 22:32:41] Start service RestoCRM                       
+[37mDEBU[0m[2024-01-16 22:33:00] Started GET /GetCardInfoEx                   
+[37mDEBU[0m[2024-01-16 22:33:00] Request: &{GET /GetCardInfoEx?card=79631087654 HTTP/1.1 1 1 map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] {} <nil> 0 [] false 192.168.0.15:8000 map[] map[] <nil> map[] 192.168.0.23:50431 /GetCardInfoEx?card=79631087654 <nil> <nil> <nil> 0x14000282140} 
+[37mDEBU[0m[2024-01-16 22:33:00] Method: GET                                  
+[37mDEBU[0m[2024-01-16 22:33:00] Host: 192.168.0.15:8000                      
+[37mDEBU[0m[2024-01-16 22:33:00] URL: /GetCardInfoEx?card=79631087654         
+[37mDEBU[0m[2024-01-16 22:33:00] RequestURI: /GetCardInfoEx?card=79631087654  
+[37mDEBU[0m[2024-01-16 22:33:00] path: /GetCardInfoEx                         
+[37mDEBU[0m[2024-01-16 22:33:00] Form: map[]                                  
+[37mDEBU[0m[2024-01-16 22:33:00] MultipartForm: <nil>                         
+[37mDEBU[0m[2024-01-16 22:33:00] ContentLength: 0                             
+[37mDEBU[0m[2024-01-16 22:33:00] Header: map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] 
+[36mINFO[0m[2024-01-16 22:33:12] Completed GET /GetCardInfoEx in 11.944428208s 
+[36mINFO[0m[2024-01-16 22:36:40] Start service RestoCRM                       
+[37mDEBU[0m[2024-01-16 22:37:00] Started GET /GetCardInfoEx                   
+[37mDEBU[0m[2024-01-16 22:37:00] Request: &{GET /GetCardInfoEx?card=79631087654 HTTP/1.1 1 1 map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] {} <nil> 0 [] false 192.168.0.15:8000 map[] map[] <nil> map[] 192.168.0.23:50676 /GetCardInfoEx?card=79631087654 <nil> <nil> <nil> 0x1400024fa00} 
+[37mDEBU[0m[2024-01-16 22:37:00] Method: GET                                  
+[37mDEBU[0m[2024-01-16 22:37:00] Host: 192.168.0.15:8000                      
+[37mDEBU[0m[2024-01-16 22:37:00] URL: /GetCardInfoEx?card=79631087654         
+[37mDEBU[0m[2024-01-16 22:37:00] RequestURI: /GetCardInfoEx?card=79631087654  
+[37mDEBU[0m[2024-01-16 22:37:00] path: /GetCardInfoEx                         
+[37mDEBU[0m[2024-01-16 22:37:00] Form: map[]                                  
+[37mDEBU[0m[2024-01-16 22:37:00] MultipartForm: <nil>                         
+[37mDEBU[0m[2024-01-16 22:37:00] ContentLength: 0                             
+[37mDEBU[0m[2024-01-16 22:37:00] Header: map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] 
+[36mINFO[0m[2024-01-16 22:37:00] Start handler GetCardInfoEx                  
+[37mDEBU[0m[2024-01-16 22:37:04] 
+==============================================================================
+~~~ REQUEST ~~~
+GET  /api/customers?apikey=e4c2fc0287d35bff51c8129b4d544843af5197dcf9f3a8bc57027646f08bed13&phone=79631087654  HTTP/1.1
+HOST   : 354630-mxiu.on-advantshop.net
+HEADERS:
+	Accept: text/plain
+	Content-Type: application/json
+	User-Agent: Advantshop API Client-Golang/1.0.0
+BODY   :
+***** NO CONTENT *****
+------------------------------------------------------------------------------
+~~~ RESPONSE ~~~
+STATUS       : 200 OK
+PROTO        : HTTP/1.1
+RECEIVED AT  : 2024-01-16T22:37:04.700011+03:00
+TIME DURATION: 4.606862541s
+HEADERS      :
+	Cache-Control: private, max-age=1
+	Content-Length: 444
+	Content-Type: application/json; charset=utf-8
+	Date: Tue, 16 Jan 2024 19:37:04 GMT
+	Expires: Tue, 16 Jan 2024 19:37:05 GMT
+	Last-Modified: Tue, 16 Jan 2024 19:37:03 GMT
+	P3p: CP="CURa ADMa DEVa CONo HISa OUR IND DSP ALL COR"
+	Set-Cookie: customer=08cb5359-6ff2-4496-912e-b41a6be35c71; domain=.354630-mxiu.on-advantshop.net; expires=Mon, 15-Apr-2024 19:37:04 GMT; path=/; HttpOnly
+	X-Content-Type-Options: nosniff
+	X-Download-Options: noopen
+	X-Powered-By: AdvantShop
+	X-Ua-Compatible: IE=edge
+BODY         :
+{
+   "customers": [
+      {
+         "id": "8d681e2b-987c-4afc-aeb7-baac41321063",
+         "email": "max@uface.ru",
+         "phone": 79631087654,
+         "firstName": "Тест база",
+         "lastName": "Тест",
+         "patronymic": "",
+         "organization": "",
+         "subscribedForNews": false,
+         "birthday": "1990-09-12T00:00:00",
+         "adminComment": "",
+         "managerId": null,
+         "groupId": 4,
+         "group": null,
+         "customerType": "0",
+         "isAgreeForPromotionalNewsletter": true
+      }
+   ],
+   "pagination": {
+      "count": 1,
+      "currentPage": 1,
+      "totalCount": 1,
+      "totalPageCount": 1
+   }
+}
+============================================================================== 
+[37mDEBU[0m[2024-01-16 22:37:04] 
+==============================================================================
+~~~ REQUEST ~~~
+GET  /api/customers/8d681e2b-987c-4afc-aeb7-baac41321063/bonuses?apikey=e4c2fc0287d35bff51c8129b4d544843af5197dcf9f3a8bc57027646f08bed13  HTTP/1.1
+HOST   : 354630-mxiu.on-advantshop.net
+HEADERS:
+	Accept: text/plain
+	Content-Type: application/json
+	Cookie: customer=08cb5359-6ff2-4496-912e-b41a6be35c71
+	User-Agent: Advantshop API Client-Golang/1.0.0
+BODY   :
+***** NO CONTENT *****
+------------------------------------------------------------------------------
+~~~ RESPONSE ~~~
+STATUS       : 200 OK
+PROTO        : HTTP/1.1
+RECEIVED AT  : 2024-01-16T22:37:04.791366+03:00
+TIME DURATION: 90.36225ms
+HEADERS      :
+	Cache-Control: private, max-age=1
+	Content-Length: 116
+	Content-Type: application/json; charset=utf-8
+	Date: Tue, 16 Jan 2024 19:37:04 GMT
+	Expires: Tue, 16 Jan 2024 19:37:05 GMT
+	Last-Modified: Tue, 16 Jan 2024 19:37:04 GMT
+	P3p: CP="CURa ADMa DEVa CONo HISa OUR IND DSP ALL COR"
+	X-Content-Type-Options: nosniff
+	X-Download-Options: noopen
+	X-Powered-By: AdvantShop
+	X-Ua-Compatible: IE=edge
+BODY         :
+{
+   "cardId": 513945,
+   "amount": 1400.0000,
+   "percent": 5.0000,
+   "isBlocked": false,
+   "gradeName": "Бронзовый",
+   "gradeId": 2
+}
+============================================================================== 
+[36mINFO[0m[2024-01-16 22:37:04] End handler GetCardInfoEx                    
+[36mINFO[0m[2024-01-16 22:38:08] Start service RestoCRM                       
+[37mDEBU[0m[2024-01-16 22:38:20] Started GET /GetCardInfoEx                   
+[37mDEBU[0m[2024-01-16 22:38:20] Request: &{GET /GetCardInfoEx?card=79631087654 HTTP/1.1 1 1 map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] {} <nil> 0 [] false 192.168.0.15:8000 map[] map[] <nil> map[] 192.168.0.23:50757 /GetCardInfoEx?card=79631087654 <nil> <nil> <nil> 0x14000280400} 
+[37mDEBU[0m[2024-01-16 22:38:20] Method: GET                                  
+[37mDEBU[0m[2024-01-16 22:38:20] Host: 192.168.0.15:8000                      
+[37mDEBU[0m[2024-01-16 22:38:20] URL: /GetCardInfoEx?card=79631087654         
+[37mDEBU[0m[2024-01-16 22:38:20] RequestURI: /GetCardInfoEx?card=79631087654  
+[37mDEBU[0m[2024-01-16 22:38:20] path: /GetCardInfoEx                         
+[37mDEBU[0m[2024-01-16 22:38:20] Form: map[]                                  
+[37mDEBU[0m[2024-01-16 22:38:20] MultipartForm: <nil>                         
+[37mDEBU[0m[2024-01-16 22:38:20] ContentLength: 0                             
+[37mDEBU[0m[2024-01-16 22:38:20] Header: map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] 
+[36mINFO[0m[2024-01-16 22:38:20] Start handler GetCardInfoEx                  
+[37mDEBU[0m[2024-01-16 22:38:20] 
+==============================================================================
+~~~ REQUEST ~~~
+GET  /api/customers?apikey=e4c2fc0287d35bff51c8129b4d544843af5197dcf9f3a8bc57027646f08bed13&phone=79631087654  HTTP/1.1
+HOST   : 354630-mxiu.on-advantshop.net
+HEADERS:
+	Accept: text/plain
+	Content-Type: application/json
+	User-Agent: Advantshop API Client-Golang/1.0.0
+BODY   :
+***** NO CONTENT *****
+------------------------------------------------------------------------------
+~~~ RESPONSE ~~~
+STATUS       : 200 OK
+PROTO        : HTTP/1.1
+RECEIVED AT  : 2024-01-16T22:38:20.693336+03:00
+TIME DURATION: 83.319042ms
+HEADERS      :
+	Cache-Control: private, max-age=1
+	Content-Length: 444
+	Content-Type: application/json; charset=utf-8
+	Date: Tue, 16 Jan 2024 19:38:19 GMT
+	Expires: Tue, 16 Jan 2024 19:38:21 GMT
+	Last-Modified: Tue, 16 Jan 2024 19:38:09 GMT
+	P3p: CP="CURa ADMa DEVa CONo HISa OUR IND DSP ALL COR"
+	Set-Cookie: customer=618bf332-0c8c-401c-8f25-500a455690d5; domain=.354630-mxiu.on-advantshop.net; expires=Mon, 15-Apr-2024 19:38:20 GMT; path=/; HttpOnly
+	X-Content-Type-Options: nosniff
+	X-Download-Options: noopen
+	X-Powered-By: AdvantShop
+	X-Ua-Compatible: IE=edge
+BODY         :
+{
+   "customers": [
+      {
+         "id": "8d681e2b-987c-4afc-aeb7-baac41321063",
+         "email": "max@uface.ru",
+         "phone": 79631087654,
+         "firstName": "Тест база",
+         "lastName": "Тест",
+         "patronymic": "",
+         "organization": "",
+         "subscribedForNews": false,
+         "birthday": "1990-09-12T00:00:00",
+         "adminComment": "",
+         "managerId": null,
+         "groupId": 4,
+         "group": null,
+         "customerType": "0",
+         "isAgreeForPromotionalNewsletter": true
+      }
+   ],
+   "pagination": {
+      "count": 1,
+      "currentPage": 1,
+      "totalCount": 1,
+      "totalPageCount": 1
+   }
+}
+============================================================================== 
+[37mDEBU[0m[2024-01-16 22:38:20] 
+==============================================================================
+~~~ REQUEST ~~~
+GET  /api/customers/8d681e2b-987c-4afc-aeb7-baac41321063/bonuses?apikey=e4c2fc0287d35bff51c8129b4d544843af5197dcf9f3a8bc57027646f08bed13  HTTP/1.1
+HOST   : 354630-mxiu.on-advantshop.net
+HEADERS:
+	Accept: text/plain
+	Content-Type: application/json
+	Cookie: customer=618bf332-0c8c-401c-8f25-500a455690d5
+	User-Agent: Advantshop API Client-Golang/1.0.0
+BODY   :
+***** NO CONTENT *****
+------------------------------------------------------------------------------
+~~~ RESPONSE ~~~
+STATUS       : 200 OK
+PROTO        : HTTP/1.1
+RECEIVED AT  : 2024-01-16T22:38:20.706561+03:00
+TIME DURATION: 12.958167ms
+HEADERS      :
+	Cache-Control: private, max-age=1
+	Content-Length: 116
+	Content-Type: application/json; charset=utf-8
+	Date: Tue, 16 Jan 2024 19:38:19 GMT
+	Expires: Tue, 16 Jan 2024 19:38:21 GMT
+	Last-Modified: Tue, 16 Jan 2024 19:38:20 GMT
+	P3p: CP="CURa ADMa DEVa CONo HISa OUR IND DSP ALL COR"
+	X-Content-Type-Options: nosniff
+	X-Download-Options: noopen
+	X-Powered-By: AdvantShop
+	X-Ua-Compatible: IE=edge
+BODY         :
+{
+   "cardId": 513945,
+   "amount": 1400.0000,
+   "percent": 5.0000,
+   "isBlocked": false,
+   "gradeName": "Бронзовый",
+   "gradeId": 2
+}
+============================================================================== 
+[36mINFO[0m[2024-01-16 22:38:20] End handler GetCardInfoEx                    
+[36mINFO[0m[2024-01-16 22:38:20] Completed GET /GetCardInfoEx in 99.040458ms  

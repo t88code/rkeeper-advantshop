@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var ErrNotFound = errors.New("Advantshop: not found")
+var ErrNotFound = errors.New("Maxma: not found")
 
 // ErrorWrap - обертка для ошибок HTTP
 func ErrorWrap(code int, message string) error {

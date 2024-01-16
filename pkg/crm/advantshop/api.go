@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	"net/url"
-	"rkeeper-advantshop/internal/handler/models"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
 	"strings"
@@ -47,11 +46,6 @@ type services struct {
 	Customers  CustomersService
 	Cards      CardsService
 	Categories CategoriesService
-}
-
-func (a *Advantshop) GetClient(cardNumber string) (*models.Card, error) {
-
-	return nil, nil
 }
 
 // NewClient - конструктор клиента для Advantshop

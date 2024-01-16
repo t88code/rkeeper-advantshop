@@ -5,41 +5,44 @@ import (
 	"rkeeper-advantshop/internal/handler/models"
 	"rkeeper-advantshop/pkg/crm/advantshop"
 	"rkeeper-advantshop/pkg/crm/maxma"
+	optionsApi "rkeeper-advantshop/pkg/crm/options/api"
+	optionsOrder "rkeeper-advantshop/pkg/crm/options/order"
 )
 
 type API interface {
 	GetClient(cardNumber string) (*models.Card, error)
+	PostOrder(opts ...optionsOrder.Option) error
 }
 
 var api API
 
-func NewAPI(apiName string, opt Options) (API, error) {
+func NewAPI(apiName string, opt optionsApi.Option) (API, error) {
 	var err error
-	var o *options
+	setting := new(optionsApi.Setting)
+	opt(setting)
+
 	switch apiName {
 	case "advantshop":
-		opt(o)
 		api, err = advantshop.NewClient(
-			o.ApiUrl,
-			o.ApiKey,
-			o.RPS,
-			o.Timeout,
-			o.Logger,
-			o.Debug,
+			setting.ApiUrl,
+			setting.ApiKey,
+			setting.RPS,
+			setting.Timeout,
+			setting.Logger,
+			setting.Debug,
 		) // todo contex
 		if err != nil {
 			return nil, err
 		}
 		return api, nil
 	case "maxma":
-		opt(o)
 		api, err = maxma.NewClient(
-			o.ApiUrl,
-			o.ApiKey,
-			o.RPS,
-			o.Timeout,
-			o.Logger,
-			o.Debug,
+			setting.ApiUrl,
+			setting.ApiKey,
+			setting.RPS,
+			setting.Timeout,
+			setting.Logger,
+			setting.Debug,
 		) // todo contex
 		if err != nil {
 			return nil, err

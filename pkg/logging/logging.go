@@ -64,6 +64,6 @@ func NewLogger(debug bool, filename string, prefix string, loggerName string) (*
 	} else {
 		l.Level = logrus.InfoLevel
 	}
-
-	return &Logger{l}, nil
+	loggers[loggerName] = &Logger{l}
+	return loggers[loggerName], nil
 }

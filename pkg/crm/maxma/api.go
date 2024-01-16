@@ -6,6 +6,7 @@ import (
 	"github.com/go-resty/resty/v2"
 	"net/url"
 	"rkeeper-advantshop/internal/handler/models"
+	orderOptions "rkeeper-advantshop/pkg/crm/options/order"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
 	"strings"
@@ -22,18 +23,23 @@ const (
 
 const (
 	Version   = "1.0.0"
-	UserAgent = "Advantshop API Client-Golang/" + Version
+	UserAgent = "Maxma API Client-Golang/" + Version
 )
 
-var advantshop *Advantshop
+var maxma *Maxma
 
-type Advantshop struct {
+type Maxma struct {
 	Debug            bool            // Is debug mode
 	Logger           *logging.Logger // Log
-	Services         services        // Advantshop API services
+	Services         services        // Maxma API services
 	LastQueryRunTime time.Time
 	RPS              int
 	ApiKey           string
+}
+
+func (a *Maxma) PostOrder(opts ...orderOptions.Option) error {
+	//TODO implement me
+	panic("implement me")
 }
 
 type service struct {
@@ -49,14 +55,14 @@ type services struct {
 	Categories CategoriesService
 }
 
-func (a *Advantshop) GetClient(cardNumber string) (*models.Card, error) {
+func (a *Maxma) GetClient(cardNumber string) (*models.Card, error) {
 
 	return nil, nil
 }
 
-// NewClient - конструктор клиента для Advantshop
-func NewClient(apiurl string, apikey string, rps int, timeout int, logger *logging.Logger, debug bool) (*Advantshop, error) {
-	advantshop = &Advantshop{
+// NewClient - конструктор клиента для Maxma
+func NewClient(apiurl string, apikey string, rps int, timeout int, logger *logging.Logger, debug bool) (*Maxma, error) {
+	maxma = &Maxma{
 		Debug:            debug,
 		Logger:           logger,
 		ApiKey:           apikey,
@@ -85,15 +91,15 @@ func NewClient(apiurl string, apikey string, rps int, timeout int, logger *loggi
 		SetAllowGetMethodPayload(true).
 		SetTimeout(time.Duration(timeout) * time.Second).
 		OnBeforeRequest(func(client *resty.Client, request *resty.Request) (err error) {
-			client.SetQueryParam("apikey", advantshop.ApiKey)
+			client.SetQueryParam("apikey", maxma.ApiKey)
 			// RPS
-			timeSub := time.Now().Sub(advantshop.LastQueryRunTime)
-			if timeSub < time.Second/time.Duration(advantshop.RPS) {
-				timeSleep := time.Second/time.Duration(advantshop.RPS) - timeSub
+			timeSub := time.Now().Sub(maxma.LastQueryRunTime)
+			if timeSub < time.Second/time.Duration(maxma.RPS) {
+				timeSleep := time.Second/time.Duration(maxma.RPS) - timeSub
 				logger.Debugf("timeSub %d nanosecond; sleep %d nanosecond",
 					timeSub, timeSleep)
 				time.Sleep(timeSleep)
-				advantshop.LastQueryRunTime = time.Now()
+				maxma.LastQueryRunTime = time.Now()
 			}
 			return nil
 		}).
@@ -101,7 +107,7 @@ func NewClient(apiurl string, apikey string, rps int, timeout int, logger *loggi
 			client.QueryParam = url.Values{}
 			if response.IsError() {
 				logger.Debugf("OnAfterResponse error: %s", err.Error())
-				telegram.SendMessageToTelegramWithLogError(fmt.Sprintf("Ошибка при обращении к Advantshop;%s", err.Error()))
+				telegram.SendMessageToTelegramWithLogError(fmt.Sprintf("Ошибка при обращении к Maxma;%s", err.Error()))
 			}
 			return
 		})
@@ -117,15 +123,15 @@ func NewClient(apiurl string, apikey string, rps int, timeout int, logger *loggi
 		logger:     logger,
 		httpClient: httpClient,
 	}
-	advantshop.Services = services{
+	maxma.Services = services{
 		Orders:     (OrdersService)(xService),
 		Customers:  (CustomersService)(xService),
 		Cards:      (CardsService)(xService),
 		Categories: (CategoriesService)(xService),
 	}
-	return advantshop, nil
+	return maxma, nil
 }
 
-func GetClient() *Advantshop {
-	return advantshop
+func GetClient() *Maxma {
+	return maxma
 }

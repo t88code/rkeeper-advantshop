@@ -10,6 +10,7 @@ import (
 	"rkeeper-advantshop/pkg/crm/advantshop"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
+	"rkeeper-advantshop/pkg/utils"
 	"strconv"
 )
 
@@ -43,7 +44,7 @@ func FindByEmail(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		case len(cardno) == 1:
 			if cardno[0] != "" {
 				switch {
-				case IsValidUUID(cardno[0]):
+				case utils.IsValidUUID(cardno[0]):
 					cards, err := clientLogus.Services.Cards.Get(cardno[0], "", 0, 0, 0)
 					if err != nil {
 						telegram.SendMessageToTelegramWithLogError("FindByEmail:" + err.Error())
@@ -90,7 +91,7 @@ func FindByEmail(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 							return
 						}
 					}
-				case IsValidPHONE(cardno[0]):
+				case utils.IsValidPHONE(cardno[0]):
 					emailInfo.AccountNum = 0
 					var phone int
 					r, _ := regexp.Compile("(^8|7|\\+7){0,1}((\\d{10})|(\\s\\(\\d{3}\\)\\s\\d{3}\\s\\d{2}\\s\\d{2}))$")
