@@ -27,12 +27,16 @@ const (
 var advantshop *Advantshop
 
 type Advantshop struct {
-	Debug            bool            // Is debug mode
-	Logger           *logging.Logger // Log
-	Services         services        // Advantshop API services
-	LastQueryRunTime time.Time
-	RPS              int
-	ApiKey           string
+	Debug                   bool            // Is debug mode
+	Logger                  *logging.Logger // Log
+	Services                services        // Advantshop API services
+	LastQueryRunTime        time.Time
+	RPS                     int
+	ApiKey                  string
+	OrderSource             string
+	Currency                string
+	CheckOrderItemExist     bool
+	CheckOrderItemAvailable bool
 }
 
 type service struct {

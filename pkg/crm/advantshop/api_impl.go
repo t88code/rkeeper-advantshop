@@ -54,8 +54,40 @@ func (a *Advantshop) GetClient(cardNumber string) (*models.Card, error) {
 }
 
 func (a *Advantshop) PostOrder(opts ...optionsOrder.Option) error {
+	o := new(optionsOrder.Order)
+	for _, opt := range opts {
+		opt(o)
+	}
 
-	//println(opts)
+	order := Order{
+		OrderCustomer: OrderCustomer{
+			Phone: o.Phone,
+		},
+		OrderPrefix:             fmt.Sprintf("%s-", o.CheckNum),
+		OrderSource:             a.OrderSource,
+		Currency:                a.Currency,
+		CustomerComment:         o.Comment,
+		BonusCost:               o.BonusSum,
+		OrderDiscountValue:      o.DiscountSum,
+		IsPaied:                 o.IsPaied,
+		CheckOrderItemExist:     false,
+		CheckOrderItemAvailable: false,
+		OrderItems:              o.Items,
+	}
+
+	prettyStruct, err := utils.PrettyStruct(order)
+	if err != nil {
+		return err
+	}
+	logger
+
+	err = a.Services.Orders.Add(order)
+	if err != nil {
+		errorInternalServerError(w, "TransactionsEx:"+err.Error())
+		return
+	}
+
+	println(order)
 	/*
 		//TODO implement me
 		clientAdvantshop := advantshop2.GetClient()
