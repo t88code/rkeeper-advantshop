@@ -3,12 +3,13 @@ package advantshop
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/go-resty/resty/v2"
 	"net/url"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
 	"strings"
 	"time"
+
+	"github.com/go-resty/resty/v2"
 )
 
 const (
@@ -27,16 +28,17 @@ const (
 var advantshop *Advantshop
 
 type Advantshop struct {
-	Debug                   bool            // Is debug mode
+	Debug                   bool            // config: Is debug mode
 	Logger                  *logging.Logger // Log
 	Services                services        // Advantshop API services
 	LastQueryRunTime        time.Time
-	RPS                     int
-	ApiKey                  string
-	OrderSource             string
-	Currency                string
-	CheckOrderItemExist     bool
-	CheckOrderItemAvailable bool
+	RPS                     int    // config
+	ApiKey                  string // config
+	OrderPrefix             string // config
+	OrderSource             string // config
+	Currency                string // config
+	CheckOrderItemExist     bool   // config
+	CheckOrderItemAvailable bool   // config
 }
 
 type service struct {

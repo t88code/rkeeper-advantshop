@@ -63,16 +63,24 @@ func (a *Advantshop) PostOrder(opts ...optionsOrder.Option) error {
 		OrderCustomer: OrderCustomer{
 			Phone: o.Phone,
 		},
-		OrderPrefix:             fmt.Sprintf("%s-", o.CheckNum),
+		OrderPrefix:             fmt.Sprintf("%s-%s", a.OrderPrefix, o.CheckNum),
 		OrderSource:             a.OrderSource,
 		Currency:                a.Currency,
 		CustomerComment:         o.Comment,
 		BonusCost:               o.BonusSum,
 		OrderDiscountValue:      o.DiscountSum,
 		IsPaied:                 o.IsPaied,
-		CheckOrderItemExist:     false,
-		CheckOrderItemAvailable: false,
-		OrderItems:              o.Items,
+		CheckOrderItemExist:     a.CheckOrderItemExist,
+		CheckOrderItemAvailable: a.CheckOrderItemAvailable,
+	}
+
+	for _, item := range o.Items {
+		order.OrderItems = append(order.OrderItems, OrderItem{
+			ArtNo:  item.ArtNo,
+			Name:   item.Name,
+			Price:  item.Price,
+			Amount: item.Amount,
+		})
 	}
 
 	prettyStruct, err := utils.PrettyStruct(order)

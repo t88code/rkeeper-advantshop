@@ -3,7 +3,6 @@ package handler
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/julienschmidt/httprouter"
 	"io/ioutil"
 	"net/http"
 	"rkeeper-advantshop/internal/handler/models"
@@ -12,6 +11,8 @@ import (
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
 	"rkeeper-advantshop/pkg/utils"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 func TransactionsEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -116,9 +117,7 @@ func TransactionsEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 		errorInternalServerError(w, fmt.Sprintf("TransactionsEx: %v", err)) // TODO переделать ошибку
 		return
 	}
-	/////////////
 
-	////////////
 	_, err = fmt.Fprint(w, "Ok")
 	if err != nil {
 		logger.Errorf("failed to send response, error: %v", err)
