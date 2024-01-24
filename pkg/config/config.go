@@ -54,7 +54,8 @@ type config struct {
 		OrderPrefix             string
 		OrderSource             string
 		Currency                string
-		BonusCost               int
+		BonusCode               int
+		CheckOrderItemExist     bool
 		CheckOrderItemAvailable bool
 	}
 	MAXMA struct {

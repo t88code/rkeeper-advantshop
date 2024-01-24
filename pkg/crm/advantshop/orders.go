@@ -7,28 +7,28 @@ import (
 
 type OrdersService service
 
-func (s *OrdersService) Add(order Order) error {
+func (s *OrdersService) Add(order Order) (*OrdersAddResult, error) {
 	orderBytes, err := json.Marshal(order)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	r, err := s.httpClient.R().
 		SetBody(orderBytes).
 		Post("/api/order/add")
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	fmt.Println(r.String())
+	s.logger.Warn(r.String())
 
 	ordersAddResult := new(OrdersAddResult)
 	if r.IsSuccess() {
 		err = json.Unmarshal(r.Body(), &ordersAddResult)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		return fmt.Errorf("%s", ordersAddResult.Errors)
+		return nil, fmt.Errorf("%s", ordersAddResult.Errors)
 	}
-	return nil
+	return ordersAddResult, nil
 }

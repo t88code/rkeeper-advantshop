@@ -60,4 +60,8 @@ type OrderItem struct {
 type OrdersAddResult struct {
 	Result bool     `json:"result"`
 	Errors []string `json:"errors"`
+	Obj    struct {
+		Id     string `json:"Id"`
+		Number string `json:"Number"`
+	} `json:"obj"`
 }

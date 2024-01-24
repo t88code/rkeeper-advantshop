@@ -17,14 +17,29 @@ type Setting struct {
 
 type Option func(*Setting)
 
-func Advantshop(apiUrl string, apiKey string, rps int, timeout int, logger *logging.Logger, debug bool) Option {
+func Advantshop(
+	apiUrl string,
+	apiKey string,
+	rps int,
+	timeout int,
+	orderSource string,
+	currency string,
+	checkOrderItemExist bool,
+	checkOrderItemAvailable bool,
+	debug bool,
+	logger *logging.Logger,
+) Option {
 	return func(setting *Setting) {
 		setting.ApiUrl = apiUrl
 		setting.ApiKey = apiKey
 		setting.RPS = rps
 		setting.Timeout = timeout
-		setting.Logger = logger
+		setting.OrderSource = orderSource
+		setting.Currency = currency
+		setting.CheckOrderItemExist = checkOrderItemExist
+		setting.CheckOrderItemAvailable = checkOrderItemAvailable
 		setting.Debug = debug
+		setting.Logger = logger
 	}
 }
 

@@ -104,7 +104,7 @@ func TransactionsEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 	}
 
 	api := crm.GetAPI()
-	err = api.PostOrder(
+	id, err := api.PostOrder(
 		optsOrder.Phone(Transaction.EXTINFO.INTERFACES.INTERFACE.HOLDERS.ITEM[0].Cardcode),
 		optsOrder.CheckNum(Transaction.CHECKDATA.Checknum),
 		optsOrder.Comment(Transaction.CHECKDATA.Persistentcomment),
@@ -117,6 +117,12 @@ func TransactionsEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 		errorInternalServerError(w, fmt.Sprintf("TransactionsEx: %v", err)) // TODO переделать ошибку
 		return
 	}
+	if id == "" {
+
+	}
+
+	var transactionResult models.TransactionResult
+	transactionResult.TRRESPONSE.ErrText =
 
 	_, err = fmt.Fprint(w, "Ok")
 	if err != nil {

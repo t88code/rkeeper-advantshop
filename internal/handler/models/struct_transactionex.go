@@ -150,3 +150,17 @@ type Transaction struct {
 		CURRENCIES string `xml:"CURRENCIES"`
 	} `xml:"CHECKDATA"`
 }
+
+type TransactionResult struct {
+	TRRESPONSE struct {
+		ErrorCode   int    `json:"error_code"`
+		ErrText     string `json:"err_text"`
+		TRANSACTION struct {
+			ExtId    string `json:"ext_id"`
+			Num      string `json:"num"`
+			Cardcode string `json:"cardcode"`
+			Slip     string `json:"slip"`
+			Value    string `json:"value"`
+		} `json:"TRANSACTION"`
+	} `json:"TRRESPONSE"`
+}

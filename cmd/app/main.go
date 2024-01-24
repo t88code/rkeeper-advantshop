@@ -63,8 +63,13 @@ func main() {
 				cfg.ADVANTSHOP.ApiKey,
 				cfg.ADVANTSHOP.RPS,
 				cfg.ADVANTSHOP.Timeout,
+				cfg.ADVANTSHOP.OrderSource,
+				cfg.ADVANTSHOP.Currency,
+				cfg.ADVANTSHOP.CheckOrderItemExist,
+				cfg.ADVANTSHOP.CheckOrderItemAvailable,
+				cfg.LOG.Debug,
 				loggerMain,
-				cfg.LOG.Debug))
+			))
 		if err != nil {
 			loggerMain.Fatal(err)
 		}

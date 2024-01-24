@@ -11,7 +11,7 @@ import (
 
 type API interface {
 	GetClient(cardNumber string) (*models.Card, error)
-	PostOrder(opts ...optionsOrder.Option) error
+	PostOrder(opts ...optionsOrder.Option) (string, error)
 }
 
 var api API
@@ -20,17 +20,9 @@ func NewAPI(apiName string, opt optionsApi.Option) (API, error) {
 	var err error
 	setting := new(optionsApi.Setting)
 	opt(setting)
-
 	switch apiName {
 	case "advantshop":
-		api, err = advantshop.NewClient(
-			setting.ApiUrl,
-			setting.ApiKey,
-			setting.RPS,
-			setting.Timeout,
-			setting.Logger,
-			setting.Debug,
-		) // todo contex
+		api, err = advantshop.NewClient(opt) // todo contex
 		if err != nil {
 			return nil, err
 		}

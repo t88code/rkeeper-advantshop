@@ -13684,3 +13684,430 @@ BODY         :
 ============================================================================== 
 [36mINFO[0m[2024-01-16 22:38:20] End handler GetCardInfoEx                    
 [36mINFO[0m[2024-01-16 22:38:20] Completed GET /GetCardInfoEx in 99.040458ms  
+[36mINFO[0m[2024-01-18 20:51:25] Start service RestoCRM                       
+[31mFATA[0m[2024-01-18 20:51:25] Config:>Failed to parse gcfg data: warnings:
+can't store data at section "ADVANTSHOP", variable "BonusCode"
+can't store data at section "ADVANTSHOP", variable "CheckOrderItemExist" 
+[36mINFO[0m[2024-01-18 20:52:18] Start service RestoCRM                       
+[37mDEBU[0m[2024-01-18 20:53:22] Started GET /GetCardInfoEx                   
+[37mDEBU[0m[2024-01-18 20:53:22] Request: &{GET /GetCardInfoEx?card=79631087654 HTTP/1.1 1 1 map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] {} <nil> 0 [] false 192.168.0.15:8000 map[] map[] <nil> map[] 192.168.0.23:57321 /GetCardInfoEx?card=79631087654 <nil> <nil> <nil> 0x14000210e00} 
+[37mDEBU[0m[2024-01-18 20:53:22] Method: GET                                  
+[37mDEBU[0m[2024-01-18 20:53:22] Host: 192.168.0.15:8000                      
+[37mDEBU[0m[2024-01-18 20:53:22] URL: /GetCardInfoEx?card=79631087654         
+[37mDEBU[0m[2024-01-18 20:53:22] RequestURI: /GetCardInfoEx?card=79631087654  
+[37mDEBU[0m[2024-01-18 20:53:22] path: /GetCardInfoEx                         
+[37mDEBU[0m[2024-01-18 20:53:22] Form: map[]                                  
+[37mDEBU[0m[2024-01-18 20:53:22] MultipartForm: <nil>                         
+[37mDEBU[0m[2024-01-18 20:53:22] ContentLength: 0                             
+[37mDEBU[0m[2024-01-18 20:53:22] Header: map[Accept:[*/*] User-Agent:[curl/8.1.2-DEV]] 
+[36mINFO[0m[2024-01-18 20:53:22] Start handler GetCardInfoEx                  
+[37mDEBU[0m[2024-01-18 20:53:26] 
+==============================================================================
+~~~ REQUEST ~~~
+GET  /api/customers?apikey=e4c2fc0287d35bff51c8129b4d544843af5197dcf9f3a8bc57027646f08bed13&phone=79631087654  HTTP/1.1
+HOST   : 354630-mxiu.on-advantshop.net
+HEADERS:
+	Accept: text/plain
+	Content-Type: application/json
+	User-Agent: Advantshop API Client-Golang/1.0.0
+BODY   :
+***** NO CONTENT *****
+------------------------------------------------------------------------------
+~~~ RESPONSE ~~~
+STATUS       : 200 OK
+PROTO        : HTTP/1.1
+RECEIVED AT  : 2024-01-18T20:53:26.967235+03:00
+TIME DURATION: 4.925601417s
+HEADERS      :
+	Cache-Control: private, max-age=1
+	Content-Length: 444
+	Content-Type: application/json; charset=utf-8
+	Date: Thu, 18 Jan 2024 17:53:27 GMT
+	Expires: Thu, 18 Jan 2024 17:53:28 GMT
+	Last-Modified: Thu, 18 Jan 2024 17:53:27 GMT
+	P3p: CP="CURa ADMa DEVa CONo HISa OUR IND DSP ALL COR"
+	Set-Cookie: customer=5a361dd1-8f28-4066-a67f-d893da7999fe; domain=.354630-mxiu.on-advantshop.net; expires=Wed, 17-Apr-2024 17:53:27 GMT; path=/; HttpOnly
+	X-Content-Type-Options: nosniff
+	X-Download-Options: noopen
+	X-Powered-By: AdvantShop
+	X-Ua-Compatible: IE=edge
+BODY         :
+{
+   "customers": [
+      {
+         "id": "8d681e2b-987c-4afc-aeb7-baac41321063",
+         "email": "max@uface.ru",
+         "phone": 79631087654,
+         "firstName": "Тест база",
+         "lastName": "Тест",
+         "patronymic": "",
+         "organization": "",
+         "subscribedForNews": false,
+         "birthday": "1990-09-12T00:00:00",
+         "adminComment": "",
+         "managerId": null,
+         "groupId": 4,
+         "group": null,
+         "customerType": "0",
+         "isAgreeForPromotionalNewsletter": true
+      }
+   ],
+   "pagination": {
+      "count": 1,
+      "currentPage": 1,
+      "totalCount": 1,
+      "totalPageCount": 1
+   }
+}
+============================================================================== 
+[37mDEBU[0m[2024-01-18 20:53:27] 
+==============================================================================
+~~~ REQUEST ~~~
+GET  /api/customers/8d681e2b-987c-4afc-aeb7-baac41321063/bonuses?apikey=e4c2fc0287d35bff51c8129b4d544843af5197dcf9f3a8bc57027646f08bed13  HTTP/1.1
+HOST   : 354630-mxiu.on-advantshop.net
+HEADERS:
+	Accept: text/plain
+	Content-Type: application/json
+	Cookie: customer=5a361dd1-8f28-4066-a67f-d893da7999fe
+	User-Agent: Advantshop API Client-Golang/1.0.0
+BODY   :
+***** NO CONTENT *****
+------------------------------------------------------------------------------
+~~~ RESPONSE ~~~
+STATUS       : 200 OK
+PROTO        : HTTP/1.1
+RECEIVED AT  : 2024-01-18T20:53:27.046957+03:00
+TIME DURATION: 78.900417ms
+HEADERS      :
+	Cache-Control: private, max-age=1
+	Content-Length: 116
+	Content-Type: application/json; charset=utf-8
+	Date: Thu, 18 Jan 2024 17:53:27 GMT
+	Expires: Thu, 18 Jan 2024 17:53:28 GMT
+	Last-Modified: Thu, 18 Jan 2024 17:53:27 GMT
+	P3p: CP="CURa ADMa DEVa CONo HISa OUR IND DSP ALL COR"
+	X-Content-Type-Options: nosniff
+	X-Download-Options: noopen
+	X-Powered-By: AdvantShop
+	X-Ua-Compatible: IE=edge
+BODY         :
+{
+   "cardId": 513945,
+   "amount": 1400.0000,
+   "percent": 5.0000,
+   "isBlocked": false,
+   "gradeName": "Бронзовый",
+   "gradeId": 2
+}
+============================================================================== 
+[36mINFO[0m[2024-01-18 20:53:27] End handler GetCardInfoEx                    
+[36mINFO[0m[2024-01-18 20:53:27] Completed GET /GetCardInfoEx in 5.006477416s 
+[37mDEBU[0m[2024-01-18 20:53:27] Started POST /TransactionsEx                 
+[37mDEBU[0m[2024-01-18 20:53:27] Request: &{POST /TransactionsEx HTTP/1.1 1 1 map[Accept:[*/*] Content-Length:[3415] Content-Type:[text/xml] User-Agent:[curl/8.1.2-DEV]] 0x14000211880 <nil> 3415 [] false 192.168.0.15:8000 map[] map[] <nil> map[] 192.168.0.23:57333 /TransactionsEx <nil> <nil> <nil> 0x140002118c0} 
+[37mDEBU[0m[2024-01-18 20:53:27] Method: POST                                 
+[37mDEBU[0m[2024-01-18 20:53:27] Host: 192.168.0.15:8000                      
+[37mDEBU[0m[2024-01-18 20:53:27] URL: /TransactionsEx                         
+[37mDEBU[0m[2024-01-18 20:53:27] RequestURI: /TransactionsEx                  
+[37mDEBU[0m[2024-01-18 20:53:27] path: /TransactionsEx                        
+[37mDEBU[0m[2024-01-18 20:53:27] Form: map[]                                  
+[37mDEBU[0m[2024-01-18 20:53:27] MultipartForm: <nil>                         
+[37mDEBU[0m[2024-01-18 20:53:27] ContentLength: 3415                          
+[37mDEBU[0m[2024-01-18 20:53:27] Header: map[Accept:[*/*] Content-Length:[3415] Content-Type:[text/xml] User-Agent:[curl/8.1.2-DEV]] 
+[36mINFO[0m[2024-01-18 20:53:27] Start handler TransactionsEx                 
+[36mINFO[0m[2024-01-18 20:53:27] Получен заказ, Guid: {0A68561B-E847-4114-8F3B-D94280C520D7}, OrderName: 1156/1, CheckNum: 100113, Sum: %!d(string=41800) 
+[37mDEBU[0m[2024-01-18 20:53:27] {
+    "XMLName": {
+        "Space": "",
+        "Local": "CHECK"
+    },
+    "Text": "\n\n\n",
+    "Stationcode": "4",
+    "Restaurantcode": "250410002",
+    "Cashservername": "TESTMID",
+    "Generateddatetime": "2024-01-18T20:53:22",
+    "Chmode": "1",
+    "Locale": "1049",
+    "Shiftdate": "2024-01-05",
+    "Shiftnum": "47",
+    "EXTINFO": {
+        "Reservation": "",
+        "INTERFACES": {
+            "Current": "1002634",
+            "INTERFACE": {
+                "Type": "PDS",
+                "ID": "1002634",
+                "Mode": "1",
+                "Interface": "11",
+                "HOLDERS": {
+                    "ITEM": [
+                        {
+                            "Cardcode": "79631087654"
+                        }
+                    ]
+                },
+                "ALLCARDS": {
+                    "ITEM": [
+                        {
+                            "Cardcode": "79631087654"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "CHECKDATA": {
+        "Checknum": "100113",
+        "Printnum": "2",
+        "Fiscdocnum": "0",
+        "Delprintnum": "0",
+        "Delfiscdocnum": "0",
+        "Extfiscid": "",
+        "Tablename": "0",
+        "Startservice": "2024-01-05T00:16:45",
+        "Closedatetime": "2024-01-18T20:53:21",
+        "Ordernum": "1156/1",
+        "Guests": "1",
+        "Orderguid": "{0A68561B-E847-4114-8F3B-D94280C520D7}",
+        "Checkguid": "{39E71CB7-71DF-4D0D-9585-50F1981EE721}",
+        "OrderCat": "1",
+        "OrderType": "9001",
+        "Persistentcomment": "",
+        "CHECKPERSONS": {
+            "Count": "1",
+            "PERSON": [
+                {
+                    "ID": "{4849A2DC-7ED1-45BB-90B5-4A7B149468C5}",
+                    "Name": "22",
+                    "Code": "22",
+                    "Role": "7"
+                }
+            ]
+        },
+        "CHECKLINES": {
+            "Count": "3",
+            "LINE": [
+                {
+                    "ID": "{E59F5A1B-6E95-4EB6-B686-C17E675EC434}",
+                    "Code": "1232",
+                    "Name": "Арт кальян (акрил)",
+                    "Uni": "4",
+                    "Type": "dish",
+                    "Price": 15000,
+                    "PrListSum": "15000",
+                    "CategID": "",
+                    "ServprintID": "",
+                    "Quantity": 1,
+                    "Sum": "14250",
+                    "LINETAXES": {
+                        "Count": "1",
+                        "TAX": [
+                            {
+                                "ID": "{34694A49-F862-4D07-9ACD-5EECF76E1B6E}",
+                                "Sum": "2173.73"
+                            }
+                        ]
+                    },
+                    "DISCOUNTS": {
+                        "DISCOUNTPART": [
+                            {
+                                "ID": "{9FB10853-9D2E-4EA8-B4D8-97635486900B}",
+                                "Disclineuni": "14",
+                                "Sum": "-750"
+                            }
+                        ]
+                    },
+                    "LINEPAYMENTS": {
+                        "LINEPAYMENT": [
+                            {
+                                "ID": "{16D72549-14D8-4F31-9E2A-0A833D4F5EED}",
+                                "Sum": "14250"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "ID": "{CFE4461E-AE38-408A-9552-03A7D0DD8EAC}",
+                    "Code": "1229",
+                    "Name": "Блюдце для Арт кальяна",
+                    "Uni": "8",
+                    "Type": "dish",
+                    "Price": 4000,
+                    "PrListSum": "4000",
+                    "CategID": "",
+                    "ServprintID": "",
+                    "Quantity": 1,
+                    "Sum": "3800",
+                    "LINETAXES": {
+                        "Count": "1",
+                        "TAX": [
+                            {
+                                "ID": "{34694A49-F862-4D07-9ACD-5EECF76E1B6E}",
+                                "Sum": "579.66"
+                            }
+                        ]
+                    },
+                    "DISCOUNTS": {
+                        "DISCOUNTPART": [
+                            {
+                                "ID": "{9FB10853-9D2E-4EA8-B4D8-97635486900B}",
+                                "Disclineuni": "14",
+                                "Sum": "-200"
+                            }
+                        ]
+                    },
+                    "LINEPAYMENTS": {
+                        "LINEPAYMENT": [
+                            {
+                                "ID": "{16D72549-14D8-4F31-9E2A-0A833D4F5EED}",
+                                "Sum": "3800"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "ID": "{D05AF894-16DB-4DE0-B8D3-DFD0E5D76972}",
+                    "Code": "1235",
+                    "Name": "Кальян Nargilem (шах)",
+                    "Uni": "11",
+                    "Type": "dish",
+                    "Price": 25000,
+                    "PrListSum": "25000",
+                    "CategID": "",
+                    "ServprintID": "",
+                    "Quantity": 1,
+                    "Sum": "23750",
+                    "LINETAXES": {
+                        "Count": "1",
+                        "TAX": [
+                            {
+                                "ID": "{34694A49-F862-4D07-9ACD-5EECF76E1B6E}",
+                                "Sum": "3622.88"
+                            }
+                        ]
+                    },
+                    "DISCOUNTS": {
+                        "DISCOUNTPART": [
+                            {
+                                "ID": "{9FB10853-9D2E-4EA8-B4D8-97635486900B}",
+                                "Disclineuni": "14",
+                                "Sum": "-1250"
+                            }
+                        ]
+                    },
+                    "LINEPAYMENTS": {
+                        "LINEPAYMENT": [
+                            {
+                                "ID": "{16D72549-14D8-4F31-9E2A-0A833D4F5EED}",
+                                "Sum": "23750"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "CHECKCATEGS": {
+            "Count": "1",
+            "CATEG": [
+                {
+                    "ID": "0",
+                    "Code": "0",
+                    "Name": "",
+                    "Sum": "41800",
+                    "Discsum": "-2200"
+                }
+            ]
+        },
+        "CHECKDISCOUNTS": {
+            "Count": "1",
+            "DISCOUNT": [
+                {
+                    "ID": "{9FB10853-9D2E-4EA8-B4D8-97635486900B}",
+                    "Code": "2",
+                    "Name": "Бронзовый",
+                    "Uni": "14",
+                    "Interface": "11",
+                    "Cardcode": "79631087654",
+                    "Account": "513945",
+                    "Sum": -2200
+                }
+            ]
+        },
+        "CHECKPAYMENTS": {
+            "Count": "1",
+            "PAYMENT": [
+                {
+                    "ID": "{16D72549-14D8-4F31-9E2A-0A833D4F5EED}",
+                    "Code": "1",
+                    "Name": "Рубли",
+                    "Uni": "604",
+                    "Paytype": "1",
+                    "Interface": "",
+                    "Cardcode": "",
+                    "Account": "",
+                    "Ownerinfo": "",
+                    "Exttransactioninfo": "",
+                    "Bsum": "41800",
+                    "Sum": 41800
+                }
+            ]
+        },
+        "CHECKTAXES": [
+            {
+                "Count": "1",
+                "TAX": [
+                    {
+                        "ID": "{34694A49-F862-4D07-9ACD-5EECF76E1B6E}",
+                        "Code": "1",
+                        "Rate": "18",
+                        "Sum": "6376.27",
+                        "Name": "НДС"
+                    }
+                ]
+            }
+        ],
+        "CURRENCIES": ""
+    }
+} 
+[37mDEBU[0m[2024-01-18 20:53:28] 
+==============================================================================
+~~~ REQUEST ~~~
+POST  /api/order/add?apikey=e4c2fc0287d35bff51c8129b4d544843af5197dcf9f3a8bc57027646f08bed13  HTTP/1.1
+HOST   : 354630-mxiu.on-advantshop.net
+HEADERS:
+	Accept: text/plain
+	Content-Type: application/json
+	Cookie: customer=5a361dd1-8f28-4066-a67f-d893da7999fe
+	User-Agent: Advantshop API Client-Golang/1.0.0
+BODY   :
+"eyJPcmRlckN1c3RvbWVyIjp7IlBob25lIjoiNzk2MzEwODc2NTQifSwiT3JkZXJQcmVmaXgiOiItMTAwMTEzIiwiT3JkZXJEaXNjb3VudFZhbHVlIjotMjIwMCwiSXNQYWllZCI6dHJ1ZSwiQ2hlY2tPcmRlckl0ZW1FeGlzdCI6ZmFsc2UsIkNoZWNrT3JkZXJJdGVtQXZhaWxhYmxlIjpmYWxzZSwiT3JkZXJJdGVtcyI6W3siQXJ0Tm8iOiIxMjMyIiwiTmFtZSI6ItCQ0YDRgiDQutCw0LvRjNGP0L0gKNCw0LrRgNC40LspIiwiUHJpY2UiOjE1MDAwLCJBbW91bnQiOjF9LHsiQXJ0Tm8iOiIxMjI5IiwiTmFtZSI6ItCR0LvRjtC00YbQtSDQtNC70Y8g0JDRgNGCINC60LDQu9GM0Y/QvdCwIiwiUHJpY2UiOjQwMDAsIkFtb3VudCI6MX0seyJBcnRObyI6IjEyMzUiLCJOYW1lIjoi0JrQsNC70YzRj9C9IE5hcmdpbGVtICjRiNCw0YUpIiwiUHJpY2UiOjI1MDAwLCJBbW91bnQiOjF9XX0="
+
+------------------------------------------------------------------------------
+~~~ RESPONSE ~~~
+STATUS       : 200 OK
+PROTO        : HTTP/1.1
+RECEIVED AT  : 2024-01-18T20:53:28.084874+03:00
+TIME DURATION: 369.341875ms
+HEADERS      :
+	Cache-Control: private, max-age=1
+	Content-Length: 83
+	Content-Type: application/json; charset=utf-8
+	Date: Thu, 18 Jan 2024 17:53:28 GMT
+	Expires: Thu, 18 Jan 2024 17:53:29 GMT
+	Last-Modified: Thu, 18 Jan 2024 17:53:27 GMT
+	P3p: CP="CURa ADMa DEVa CONo HISa OUR IND DSP ALL COR"
+	X-Content-Type-Options: nosniff
+	X-Download-Options: noopen
+	X-Powered-By: AdvantShop
+	X-Ua-Compatible: IE=edge
+BODY         :
+{
+   "result": false,
+   "errors": [
+      "Object reference not set to an instance of an object."
+   ]
+}
+============================================================================== 
+[33mWARN[0m[2024-01-18 20:53:28] {"result":false,"errors":["Object reference not set to an instance of an object."]} 
+[36mINFO[0m[2024-01-18 20:53:28] End handler TransactionsEx                   
+[36mINFO[0m[2024-01-18 20:53:28] Completed POST /TransactionsEx in 617.129667ms 
+[36mINFO[0m[2024-01-25 01:41:33] Start service RestoCRM                       

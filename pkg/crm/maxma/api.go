@@ -37,7 +37,7 @@ type Maxma struct {
 	ApiKey           string
 }
 
-func (a *Maxma) PostOrder(opts ...orderOptions.Option) error {
+func (a *Maxma) PostOrder(opts ...orderOptions.Option) (string, error) {
 	//TODO implement me
 	panic("implement me")
 }

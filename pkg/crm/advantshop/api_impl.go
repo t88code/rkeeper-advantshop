@@ -53,7 +53,7 @@ func (a *Advantshop) GetClient(cardNumber string) (*models.Card, error) {
 	return card, nil
 }
 
-func (a *Advantshop) PostOrder(opts ...optionsOrder.Option) error {
+func (a *Advantshop) PostOrder(opts ...optionsOrder.Option) (string, error) {
 	o := new(optionsOrder.Order)
 	for _, opt := range opts {
 		opt(o)
@@ -83,62 +83,10 @@ func (a *Advantshop) PostOrder(opts ...optionsOrder.Option) error {
 		})
 	}
 
-	prettyStruct, err := utils.PrettyStruct(order)
+	orderAddResult, err := a.Services.Orders.Add(order)
 	if err != nil {
-		return err
-	}
-	logger
-
-	err = a.Services.Orders.Add(order)
-	if err != nil {
-		errorInternalServerError(w, "TransactionsEx:"+err.Error())
-		return
+		return "", err
 	}
 
-	println(order)
-	/*
-		//TODO implement me
-		clientAdvantshop := advantshop2.GetClient()
-
-		order := advantshop2.Order{
-			OrderCustomer: advantshop2.OrderCustomer{
-				Phone: Transaction.EXTINFO.INTERFACES.INTERFACE.HOLDERS.ITEM[0].Cardcode,
-			},
-			OrderPrefix:     fmt.Sprintf("%s-", Transaction.CHECKDATA.Checknum), // CHECKDATA:
-			OrderSource:     "rkeeper",                                          // config:
-			Currency:        "RUB",                                              // config:
-			CustomerComment: Transaction.CHECKDATA.Persistentcomment,            // CHECKDATA:
-			BonusCost:       0,                                                  // CHECKDATA:
-			//OrderDiscount:           0,
-			OrderDiscountValue: 0, // CHECKDATA:
-			//ShippingTaxName:         "",
-			//TrackNumber:             "",
-			//TotalWeight:             0,
-			//TotalLength:             0,
-			//TotalWidth:              0,
-			//TotalHeight:             0,
-			//OrderStatusName:         "",
-			//ManagerEmail:            "",
-			IsPaied:                 true,  // CHECKDATA:
-			CheckOrderItemExist:     false, // config: признак, что блюдо в наличии в Advantshop
-			CheckOrderItemAvailable: false, // config: признак, что блюдо заведено в Advantshop
-			OrderItems:              nil,
-		}
-
-		prettyStruct, err = utils.PrettyStruct(order)
-		if err != nil {
-			logger.Errorln(err)
-			return
-		}
-
-		err = clientAdvantshop.Services.Orders.Add(order)
-		if err != nil {
-			errorInternalServerError(w, "TransactionsEx:"+err.Error())
-			return
-		}
-
-		panic("implement me")
-
-	*/
-	return nil
+	return orderAddResult.Obj.Id, nil
 }

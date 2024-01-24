@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	optionsApi "rkeeper-advantshop/pkg/crm/options/api"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/telegram"
 	"strings"
@@ -39,6 +40,8 @@ type Advantshop struct {
 	Currency                string // config
 	CheckOrderItemExist     bool   // config
 	CheckOrderItemAvailable bool   // config
+	Timeout                 int    // config
+	URL                     string // config
 }
 
 type service struct {
@@ -55,17 +58,25 @@ type services struct {
 }
 
 // NewClient - конструктор клиента для Advantshop
-func NewClient(apiurl string, apikey string, rps int, timeout int, logger *logging.Logger, debug bool) (*Advantshop, error) {
+func NewClient(opt optionsApi.Option) (*Advantshop, error) {
+	setting := new(optionsApi.Setting)
+	opt(setting)
 	advantshop = &Advantshop{
-		Debug:            debug,
-		Logger:           logger,
-		ApiKey:           apikey,
-		LastQueryRunTime: time.Now(),
-		RPS:              rps,
+		Debug:                   setting.Debug,
+		Logger:                  setting.Logger,
+		ApiKey:                  setting.ApiKey,
+		LastQueryRunTime:        time.Now(),
+		RPS:                     setting.RPS,
+		OrderSource:             setting.OrderSource,
+		Currency:                setting.Currency,
+		CheckOrderItemExist:     setting.CheckOrderItemExist,
+		CheckOrderItemAvailable: setting.CheckOrderItemAvailable,
+		Timeout:                 setting.Timeout,
+		URL:                     setting.ApiUrl,
 	}
 
-	if timeout < 2 {
-		timeout = 2
+	if advantshop.Timeout < 2 {
+		advantshop.Timeout = 2
 	}
 
 	httpClient := resty.New().
@@ -74,23 +85,23 @@ func NewClient(apiurl string, apikey string, rps int, timeout int, logger *loggi
 			func(r *resty.Response, err error) bool {
 				return r.IsError()
 			}).
-		SetLogger(logger).
-		SetDebug(debug).
-		SetBaseURL(strings.TrimRight(apiurl, "/")).
+		SetLogger(advantshop.Logger).
+		SetDebug(advantshop.Debug).
+		SetBaseURL(strings.TrimRight(advantshop.URL, "/")).
 		SetHeaders(map[string]string{
 			"Content-Type": "application/json",
 			"Accept":       "text/plain",
 			"User-Agent":   UserAgent,
 		}).
 		SetAllowGetMethodPayload(true).
-		SetTimeout(time.Duration(timeout) * time.Second).
+		SetTimeout(time.Duration(advantshop.Timeout) * time.Second).
 		OnBeforeRequest(func(client *resty.Client, request *resty.Request) (err error) {
 			client.SetQueryParam("apikey", advantshop.ApiKey)
 			// RPS
 			timeSub := time.Now().Sub(advantshop.LastQueryRunTime)
 			if timeSub < time.Second/time.Duration(advantshop.RPS) {
 				timeSleep := time.Second/time.Duration(advantshop.RPS) - timeSub
-				logger.Debugf("timeSub %d nanosecond; sleep %d nanosecond",
+				advantshop.Logger.Debugf("timeSub %d nanosecond; sleep %d nanosecond",
 					timeSub, timeSleep)
 				time.Sleep(timeSleep)
 				advantshop.LastQueryRunTime = time.Now()
@@ -100,21 +111,21 @@ func NewClient(apiurl string, apikey string, rps int, timeout int, logger *loggi
 		OnAfterResponse(func(client *resty.Client, response *resty.Response) (err error) {
 			client.QueryParam = url.Values{}
 			if response.IsError() {
-				logger.Debugf("OnAfterResponse error: %s", err.Error())
+				advantshop.Logger.Debugf("OnAfterResponse error: %s", err.Error())
 				telegram.SendMessageToTelegramWithLogError(fmt.Sprintf("Ошибка при обращении к Advantshop;%s", err.Error()))
 			}
 			return
 		})
 
-	if debug {
+	if advantshop.Debug {
 		httpClient.EnableTrace()
 	}
 
 	httpClient.JSONMarshal = json.Marshal
 	httpClient.JSONUnmarshal = json.Unmarshal
 	xService := service{
-		debug:      debug,
-		logger:     logger,
+		debug:      advantshop.Debug,
+		logger:     advantshop.Logger,
 		httpClient: httpClient,
 	}
 	advantshop.Services = services{
