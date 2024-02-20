@@ -29,10 +29,10 @@ const (
 var advantshop *Advantshop
 
 type Advantshop struct {
-	Debug                   bool            // config: Is debug mode
-	Logger                  *logging.Logger // Log
 	Services                services        // Advantshop API services
+	Logger                  *logging.Logger // Log
 	LastQueryRunTime        time.Time
+	Debug                   bool   // config: Is debug mode
 	RPS                     int    // config
 	ApiKey                  string // config
 	OrderPrefix             string // config
@@ -41,7 +41,8 @@ type Advantshop struct {
 	CheckOrderItemExist     bool   // config
 	CheckOrderItemAvailable bool   // config
 	Timeout                 int    // config
-	URL                     string // config
+	ApiUrl                  string // config
+	BonusInFio              bool   // string
 }
 
 type service struct {
@@ -62,17 +63,19 @@ func NewClient(opt optionsApi.Option) (*Advantshop, error) {
 	setting := new(optionsApi.Setting)
 	opt(setting)
 	advantshop = &Advantshop{
-		Debug:                   setting.Debug,
 		Logger:                  setting.Logger,
-		ApiKey:                  setting.ApiKey,
 		LastQueryRunTime:        time.Now(),
+		Debug:                   setting.Debug,
 		RPS:                     setting.RPS,
+		ApiKey:                  setting.ApiKey,
+		ApiUrl:                  setting.ApiUrl,
+		OrderPrefix:             setting.OrderPrefix,
 		OrderSource:             setting.OrderSource,
 		Currency:                setting.Currency,
 		CheckOrderItemExist:     setting.CheckOrderItemExist,
 		CheckOrderItemAvailable: setting.CheckOrderItemAvailable,
 		Timeout:                 setting.Timeout,
-		URL:                     setting.ApiUrl,
+		BonusInFio:              setting.BonusInFio,
 	}
 
 	if advantshop.Timeout < 2 {
@@ -87,7 +90,7 @@ func NewClient(opt optionsApi.Option) (*Advantshop, error) {
 			}).
 		SetLogger(advantshop.Logger).
 		SetDebug(advantshop.Debug).
-		SetBaseURL(strings.TrimRight(advantshop.URL, "/")).
+		SetBaseURL(strings.TrimRight(advantshop.ApiUrl, "/")).
 		SetHeaders(map[string]string{
 			"Content-Type": "application/json",
 			"Accept":       "text/plain",
@@ -111,7 +114,7 @@ func NewClient(opt optionsApi.Option) (*Advantshop, error) {
 		OnAfterResponse(func(client *resty.Client, response *resty.Response) (err error) {
 			client.QueryParam = url.Values{}
 			if response.IsError() {
-				advantshop.Logger.Debugf("OnAfterResponse error: %s", err.Error())
+				advantshop.Logger.Debugf("OnAfterResponse errornew: %s", err.Error())
 				telegram.SendMessageToTelegramWithLogError(fmt.Sprintf("Ошибка при обращении к Advantshop;%s", err.Error()))
 			}
 			return

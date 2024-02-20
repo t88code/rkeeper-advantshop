@@ -8,6 +8,7 @@ type Item struct {
 }
 
 type Order struct {
+	CustomerID              string
 	CardNumber              string
 	Phone                   string
 	CheckNum                string
@@ -19,10 +20,17 @@ type Order struct {
 	IsPaied                 bool // Advantshop
 	CheckOrderItemExist     bool // Advantshop
 	CheckOrderItemAvailable bool // Advantshop
+	OrderPrefix             string
 	Items                   []Item
 }
 
 type Option func(*Order)
+
+func Customer(customerID string) Option {
+	return func(o *Order) {
+		o.CustomerID = customerID
+	}
+}
 
 func CardNumber(cardNumber string) Option {
 	return func(o *Order) {
@@ -45,6 +53,12 @@ func CheckNum(checknum string) Option {
 func OrderSource(orderSource string) Option {
 	return func(o *Order) {
 		o.OrderSource = orderSource
+	}
+}
+
+func OrderPrefix(orderPrefix string) Option {
+	return func(o *Order) {
+		o.OrderPrefix = orderPrefix
 	}
 }
 

@@ -11,4 +11,14 @@ func Check() {
 	if time.Now().Sub(tm) > 0 {
 		os.Exit(1)
 	}
+
+}
+
+func CheckRestCode(RestCode string) {
+	for _, code := range RestCodes {
+		if RestCode == code {
+			return
+		}
+	}
+	os.Exit(1)
 }

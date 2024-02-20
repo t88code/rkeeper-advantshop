@@ -19,11 +19,6 @@ type config struct {
 	SERVICE struct {
 		PORT int
 	}
-	RK7REF struct {
-		URL  string
-		User string
-		Pass string
-	}
 	RK7MID struct {
 		URL           string
 		User          string
@@ -57,6 +52,7 @@ type config struct {
 		BonusCode               int
 		CheckOrderItemExist     bool
 		CheckOrderItemAvailable bool
+		BonusInFio              bool
 	}
 	MAXMA struct {
 		URL                     string
@@ -76,7 +72,7 @@ type config struct {
 
 var cfg = new(config)
 
-func GetConfig(logger *logging.Logger, appName string) (*config, error) {
+func GetConfig(logger *logging.Logger) (*config, error) {
 	check.Check()
 	pwd, err := os.Getwd()
 	if err != nil {

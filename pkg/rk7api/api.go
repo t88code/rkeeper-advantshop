@@ -9,7 +9,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"rkeeper-advantshop/pkg/config"
 	"rkeeper-advantshop/pkg/logging"
 	"rkeeper-advantshop/pkg/rk7api/models"
 	"strings"
@@ -99,7 +98,6 @@ func (r *rk7api) UpdateOrder(Guid string, fields ...models.FieldUpdateOrder) (*m
 	if err != nil {
 		return nil, errors.Wrap(err, "failed Marshal in func UpdateOrder")
 	}
-	cfg := config.GetConfig()
 	i := 0
 	for {
 		xmlResponse, err := Send(r.url, r.user, r.pass, xmlQuery)
@@ -117,7 +115,7 @@ func (r *rk7api) UpdateOrder(Guid string, fields ...models.FieldUpdateOrder) (*m
 		}
 		if rk7QueryResultUpdateOrder.Status != "Ok" {
 			if i == 0 {
-				time.Sleep(time.Second * time.Duration(cfg.RK7MID.TimeoutError))
+				time.Sleep(time.Second * time.Duration(5))
 				i++
 				continue
 			}
@@ -398,6 +396,32 @@ func (r *rk7api) GetRefData(RefName string, opts ...models.GetRefDataOptions) (R
 			return nil, errors.New(fmt.Sprintf("Ошибка в Response RK7API.GetRefData:>%s.%s", rk7QueryResultGetRefDataCateglist.Status, rk7QueryResultGetRefDataCateglist.ErrorText))
 		}
 		return rk7QueryResultGetRefDataCateglist, nil
+	case "restaurants":
+		rk7QueryResultGetRefDataRestaurants := new(models.RK7QueryResultGetRefDataRestaurants)
+		err = xml.Unmarshal(xmlRK7QueryResultGetRefData, rk7QueryResultGetRefDataRestaurants)
+		if err != nil {
+			return nil, errors.Wrap(err, "GetRefData.Restaurants:>Не удалось выполнить Unmarshal")
+		}
+		if rk7QueryResultGetRefDataRestaurants.XMLName.Local != `RK7QueryResult` {
+			return nil, errors.New("Ошибка в Response RK7API.GetRefData. RK7QueryResult not found")
+		}
+		if rk7QueryResultGetRefDataRestaurants.Status != "Ok" {
+			return nil, errors.New(fmt.Sprintf("Ошибка в Response RK7API.GetRefData:>%s.%s", rk7QueryResultGetRefDataRestaurants.Status, rk7QueryResultGetRefDataRestaurants.ErrorText))
+		}
+		return rk7QueryResultGetRefDataRestaurants, nil
+	case "cashes":
+		rk7QueryResultGetRefDataCashes := new(models.RK7QueryResultGetRefDataCashes)
+		err = xml.Unmarshal(xmlRK7QueryResultGetRefData, rk7QueryResultGetRefDataCashes)
+		if err != nil {
+			return nil, errors.Wrap(err, "GetRefData.Cashes:>Не удалось выполнить Unmarshal")
+		}
+		if rk7QueryResultGetRefDataCashes.XMLName.Local != `RK7QueryResult` {
+			return nil, errors.New("Ошибка в Response RK7API.GetRefData. RK7QueryResult not found")
+		}
+		if rk7QueryResultGetRefDataCashes.Status != "Ok" {
+			return nil, errors.New(fmt.Sprintf("Ошибка в Response RK7API.GetRefData:>%s.%s", rk7QueryResultGetRefDataCashes.Status, rk7QueryResultGetRefDataCashes.ErrorText))
+		}
+		return rk7QueryResultGetRefDataCashes, nil
 	default:
 		return nil, errors.New(fmt.Sprintf("not found RefName:%s", RefName))
 	}
@@ -541,38 +565,46 @@ func Send(url, user, pass string, data []byte) (respBody []byte, e error) {
 	return respBody, nil
 }
 
-func NewAPI(url string, user string, pass string) (RK7API, error) {
+func NewAPI(url string, user string, pass string, xmlType int, xmlUser, xmlPass, xmlToken, xmlProductId, xmlGuid, xmlUrl string, xmlRestCode int) (RK7API, error) {
 
 	var err error
-	cfg := config.GetConfig()
 	xmlApi := new(xmlInterface)
 
-	switch cfg.XMLINTERFACE.Type {
+	switch xmlType {
 	case 1:
 		xmlApi = nil
 	case 2:
-		xmlApi, err = NewXmlInterface(cfg.XMLINTERFACE.UserName,
-			cfg.XMLINTERFACE.Password,
-			cfg.XMLINTERFACE.Token,
-			cfg.XMLINTERFACE.ProductID,
-			cfg.XMLINTERFACE.Guid,
-			cfg.XMLINTERFACE.RestCode,
-			cfg.XMLINTERFACE.URL,
+		xmlApi, err = NewXmlInterface(xmlUser,
+			xmlPass,
+			xmlToken,
+			xmlProductId,
+			xmlGuid,
+			xmlRestCode,
+			xmlUrl,
 		)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed NewXmlInterface")
 		}
 	default:
-		return nil, errors.New(fmt.Sprintf("не удалось определить cfg.XMLINTERFACE.Type=%d", cfg.XMLINTERFACE.Type))
+		return nil, errors.New(fmt.Sprintf("не удалось определить cfg.XMLINTERFACE.Type=%d", xmlType))
 	}
 
 	rk7apiGlobal = &rk7api{
 		url:     url,
 		user:    user,
 		pass:    pass,
-		xmlType: cfg.XMLINTERFACE.Type,
+		xmlType: xmlType,
 		xmlApi:  xmlApi,
 	}
+
+	rk7apiGlobal = &rk7api{
+		url:     url,
+		user:    user,
+		pass:    pass,
+		xmlType: 1,
+		xmlApi:  xmlApi,
+	}
+
 	return rk7apiGlobal, nil
 }
 

@@ -10,12 +10,12 @@ import (
 	"rkeeper-advantshop/pkg/crm/options/api"
 	check "rkeeper-advantshop/pkg/license"
 	"rkeeper-advantshop/pkg/logging"
+	"rkeeper-advantshop/pkg/rk7api"
 	"rkeeper-advantshop/pkg/telegram"
 	"time"
 )
 
 func main() {
-
 	loggerMain, err := logging.NewLogger(
 		true,
 		"main.log",
@@ -47,45 +47,42 @@ func main() {
 	}
 
 	check.Check()
-	apiName := "advantshop"
-
-	cfg, err := config.GetConfig(loggerConfig, apiName)
+	cfg, err := config.GetConfig(loggerConfig)
 	if err != nil {
 		loggerMain.Fatal(err)
 	}
 
-	switch apiName {
-	case "advantshop":
-		_, err = crm.NewAPI(
-			"advantshop",
-			api.Advantshop(
-				cfg.ADVANTSHOP.URL,
-				cfg.ADVANTSHOP.ApiKey,
-				cfg.ADVANTSHOP.RPS,
-				cfg.ADVANTSHOP.Timeout,
-				cfg.ADVANTSHOP.OrderSource,
-				cfg.ADVANTSHOP.Currency,
-				cfg.ADVANTSHOP.CheckOrderItemExist,
-				cfg.ADVANTSHOP.CheckOrderItemAvailable,
-				cfg.LOG.Debug,
-				loggerMain,
-			))
-		if err != nil {
-			loggerMain.Fatal(err)
-		}
-	case "maxma":
-		_, err = crm.NewAPI(
-			"maxma",
-			api.Maxma(
-				cfg.MAXMA.URL,
-				cfg.MAXMA.ApiKey,
-				cfg.MAXMA.RPS,
-				cfg.MAXMA.Timeout,
-				loggerMain,
-				cfg.LOG.Debug))
-		if err != nil {
-			loggerMain.Fatal(err)
-		}
+	_, err = rk7api.NewAPI(cfg.RK7MID.URL,
+		cfg.RK7MID.User,
+		cfg.RK7MID.Pass,
+		cfg.XMLINTERFACE.Type,
+		cfg.XMLINTERFACE.UserName,
+		cfg.XMLINTERFACE.Password,
+		cfg.XMLINTERFACE.Token,
+		cfg.XMLINTERFACE.ProductID,
+		cfg.XMLINTERFACE.Guid,
+		cfg.XMLINTERFACE.URL,
+		cfg.XMLINTERFACE.RestCode)
+	if err != nil {
+		loggerMain.Fatal(err)
+	}
+
+	_, err = crm.NewAPI(
+		api.Advantshop(loggerMain,
+			cfg.LOG.Debug,
+			cfg.ADVANTSHOP.RPS,
+			cfg.ADVANTSHOP.ApiKey,
+			cfg.ADVANTSHOP.URL,
+			cfg.ADVANTSHOP.OrderPrefix,
+			cfg.ADVANTSHOP.OrderSource,
+			cfg.ADVANTSHOP.Currency,
+			cfg.ADVANTSHOP.CheckOrderItemExist,
+			cfg.ADVANTSHOP.CheckOrderItemAvailable,
+			cfg.ADVANTSHOP.Timeout,
+			cfg.ADVANTSHOP.BonusInFio,
+		))
+	if err != nil {
+		loggerMain.Fatal(err)
 	}
 
 	go telegram.BotStart(
@@ -98,6 +95,7 @@ func main() {
 	router.GET("/GetCardInfoEx", handler.GetCardInfoEx)
 	router.GET("/FindByEmail", handler.FindByEmail)
 	router.POST("/TransactionsEx", handler.TransactionsEx)
+	router.GET("/FindOwnerByNamePart", handler.FindOwnerByNamePart)
 	//router.POST("/Update", handler.UpdateDiscount) TODO ручку для обновления скидок-грейдов
 
 	loggerMain.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", cfg.SERVICE.PORT), RequestLogger{h: router, l: loggerMain}))
@@ -114,7 +112,7 @@ func (rl RequestLogger) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	rl.l.Debug("Request: ", r)
 	rl.l.Debug("Method: ", r.Method)
 	rl.l.Debug("Host: ", r.Host)
-	rl.l.Debug("URL: ", r.URL)
+	rl.l.Debug("ApiUrl: ", r.URL)
 	rl.l.Debug("RequestURI: ", r.RequestURI)
 	rl.l.Debug("path: ", r.URL.Path)
 	rl.l.Debug("Form: ", r.Form)
@@ -132,16 +130,16 @@ func (rl RequestLogger) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 //	logger.Println("Start main init...")
 //	defer logger.Println("End main init.")
 //	cfg := config.GetConfig()
-//	var err error
+//	var err errornew
 //
-//	_ = wooapi.NewAPI(cfg.WOOCOMMERCE.URL, cfg.WOOCOMMERCE.Key, cfg.WOOCOMMERCE.Secret)
+//	_ = wooapi.NewAPI(cfg.WOOCOMMERCE.ApiUrl, cfg.WOOCOMMERCE.Key, cfg.WOOCOMMERCE.Secret)
 //
-//	_, err = rk7api.NewAPI(cfg.RK7.URL, cfg.RK7.User, cfg.RK7.Pass, "REF")
+//	_, err = rk7api.NewAPI(cfg.RK7.ApiUrl, cfg.RK7.User, cfg.RK7.Pass, "REF")
 //	if err != nil {
 //		logger.Fatal("failed main init; rk7api.NewAPI; ", err)
 //	}
 //
-//	_, err = rk7api.NewAPI(cfg.RK7MID.URL, cfg.RK7MID.User, cfg.RK7MID.Pass, "MID")
+//	_, err = rk7api.NewAPI(cfg.RK7MID.ApiUrl, cfg.RK7MID.User, cfg.RK7MID.Pass, "MID")
 //	if err != nil {
 //		logger.Fatal("failed main init; rk7api.NewAPI; ", err)
 //	}

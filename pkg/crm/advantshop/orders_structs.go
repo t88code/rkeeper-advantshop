@@ -1,5 +1,7 @@
 package advantshop
 
+import "time"
+
 type Order struct {
 	OrderCustomer           OrderCustomer `json:"OrderCustomer"`
 	OrderPrefix             string        `json:"OrderPrefix,omitempty"`
@@ -61,7 +63,75 @@ type OrdersAddResult struct {
 	Result bool     `json:"result"`
 	Errors []string `json:"errors"`
 	Obj    struct {
-		Id     string `json:"Id"`
-		Number string `json:"Number"`
+		Id                 int         `json:"Id"`
+		Number             string      `json:"Number"`
+		Currency           string      `json:"Currency"`
+		Sum                float64     `json:"Sum"`
+		Date               time.Time   `json:"Date"`
+		CustomerComment    string      `json:"CustomerComment"`
+		AdminComment       string      `json:"AdminComment"`
+		PaymentName        string      `json:"PaymentName"`
+		PaymentCost        float64     `json:"PaymentCost"`
+		ShippingName       string      `json:"ShippingName"`
+		ShippingCost       float64     `json:"ShippingCost"`
+		ShippingTaxName    string      `json:"ShippingTaxName"`
+		TrackNumber        string      `json:"TrackNumber"`
+		DeliveryDate       interface{} `json:"DeliveryDate"`
+		DeliveryTime       string      `json:"DeliveryTime"`
+		OrderDiscount      float64     `json:"OrderDiscount"`
+		OrderDiscountValue float64     `json:"OrderDiscountValue"`
+		BonusCardNumber    interface{} `json:"BonusCardNumber"`
+		BonusCost          float64     `json:"BonusCost"`
+		LpId               interface{} `json:"LpId"`
+		IsPaid             bool        `json:"IsPaid"`
+		BillingApiLink     string      `json:"BillingApiLink"`
+		PaymentDate        interface{} `json:"PaymentDate"`
+		Customer           struct {
+			CustomerId   string `json:"CustomerId"`
+			FirstName    string `json:"FirstName"`
+			LastName     string `json:"LastName"`
+			Patronymic   string `json:"Patronymic"`
+			Organization string `json:"Organization"`
+			Email        string `json:"Email"`
+			Phone        string `json:"Phone"`
+			Country      string `json:"Country"`
+			Region       string `json:"Region"`
+			District     string `json:"District"`
+			City         string `json:"City"`
+			Zip          string `json:"Zip"`
+			CustomField1 string `json:"CustomField1"`
+			CustomField2 string `json:"CustomField2"`
+			CustomField3 string `json:"CustomField3"`
+			Street       string `json:"Street"`
+			House        string `json:"House"`
+			Apartment    string `json:"Apartment"`
+			Structure    string `json:"Structure"`
+			Entrance     string `json:"Entrance"`
+			Floor        string `json:"Floor"`
+		} `json:"Customer"`
+		Status struct {
+			Id          int    `json:"Id"`
+			Name        string `json:"Name"`
+			Color       string `json:"Color"`
+			IsCanceled  bool   `json:"IsCanceled"`
+			IsCompleted bool   `json:"IsCompleted"`
+			Hidden      bool   `json:"Hidden"`
+		} `json:"Status"`
+		Source struct {
+			Id   int    `json:"Id"`
+			Name string `json:"Name"`
+			Main bool   `json:"Main"`
+			Type string `json:"Type"`
+		} `json:"Source"`
+		Items []struct {
+			ArtNo    string      `json:"ArtNo"`
+			Name     string      `json:"Name"`
+			Color    interface{} `json:"Color"`
+			Size     interface{} `json:"Size"`
+			Price    float64     `json:"Price"`
+			Amount   float64     `json:"Amount"`
+			PhotoSrc string      `json:"PhotoSrc"`
+		} `json:"Items"`
+		ModifiedDate string `json:"ModifiedDate"`
 	} `json:"obj"`
 }

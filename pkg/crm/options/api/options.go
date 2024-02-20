@@ -3,53 +3,48 @@ package api
 import "rkeeper-advantshop/pkg/logging"
 
 type Setting struct {
-	ApiUrl                  string
-	ApiKey                  string
-	RPS                     int
-	Timeout                 int
 	Logger                  *logging.Logger
 	Debug                   bool
+	RPS                     int
+	ApiKey                  string
+	ApiUrl                  string
+	OrderPrefix             string
 	OrderSource             string
 	Currency                string
 	CheckOrderItemExist     bool
 	CheckOrderItemAvailable bool
+	Timeout                 int
+	BonusInFio              bool
 }
 
 type Option func(*Setting)
 
 func Advantshop(
-	apiUrl string,
-	apiKey string,
+	logger *logging.Logger,
+	debug bool,
 	rps int,
-	timeout int,
+	apiKey string,
+	apiUrl string,
+	orderPrefix string,
 	orderSource string,
 	currency string,
 	checkOrderItemExist bool,
 	checkOrderItemAvailable bool,
-	debug bool,
-	logger *logging.Logger,
+	timeout int,
+	bonusInFio bool,
 ) Option {
 	return func(setting *Setting) {
-		setting.ApiUrl = apiUrl
-		setting.ApiKey = apiKey
+		setting.Logger = logger
+		setting.Debug = debug
 		setting.RPS = rps
-		setting.Timeout = timeout
+		setting.ApiKey = apiKey
+		setting.ApiUrl = apiUrl
+		setting.OrderPrefix = orderPrefix
 		setting.OrderSource = orderSource
 		setting.Currency = currency
 		setting.CheckOrderItemExist = checkOrderItemExist
 		setting.CheckOrderItemAvailable = checkOrderItemAvailable
-		setting.Debug = debug
-		setting.Logger = logger
-	}
-}
-
-func Maxma(apiUrl string, apiKey string, rps int, timeout int, logger *logging.Logger, debug bool) Option {
-	return func(setting *Setting) {
-		setting.ApiUrl = apiUrl
-		setting.ApiKey = apiKey
-		setting.RPS = rps
 		setting.Timeout = timeout
-		setting.Logger = logger
-		setting.Debug = debug
+		setting.BonusInFio = bonusInFio
 	}
 }

@@ -110,31 +110,31 @@ type Transaction struct {
 		CHECKDISCOUNTS struct {
 			Count    string `xml:"count,attr"`
 			DISCOUNT []struct {
-				ID        string `xml:"id,attr"`
-				Code      string `xml:"code,attr"`
-				Name      string `xml:"name,attr"`
-				Uni       string `xml:"uni,attr"`
-				Interface string `xml:"interface,attr"`
-				Cardcode  string `xml:"cardcode,attr"`
-				Account   string `xml:"account,attr"`
-				Sum       int    `xml:"sum,attr"`
+				ID        string  `xml:"id,attr"`
+				Code      string  `xml:"code,attr"`
+				Name      string  `xml:"name,attr"`
+				Uni       string  `xml:"uni,attr"`
+				Interface string  `xml:"interface,attr"`
+				Cardcode  string  `xml:"cardcode,attr"`
+				Account   string  `xml:"account,attr"`
+				Sum       float64 `xml:"sum,attr"`
 			} `xml:"DISCOUNT"`
 		} `xml:"CHECKDISCOUNTS"`
 		CHECKPAYMENTS struct {
 			Count   string `xml:"count,attr"`
 			PAYMENT []struct {
-				ID                 string `xml:"id,attr"`
-				Code               string `xml:"code,attr"`
-				Name               string `xml:"name,attr"`
-				Uni                string `xml:"uni,attr"`
-				Paytype            string `xml:"paytype,attr"`
-				Interface          string `xml:"interface,attr"`
-				Cardcode           string `xml:"cardcode,attr"`
-				Account            string `xml:"account,attr"`
-				Ownerinfo          string `xml:"ownerinfo,attr"`
-				Exttransactioninfo string `xml:"exttransactioninfo,attr"`
-				Bsum               string `xml:"bsum,attr"`
-				Sum                int    `xml:"sum,attr"`
+				ID                 string  `xml:"id,attr"`
+				Code               string  `xml:"code,attr"`
+				Name               string  `xml:"name,attr"`
+				Uni                string  `xml:"uni,attr"`
+				Paytype            string  `xml:"paytype,attr"`
+				Interface          string  `xml:"interface,attr"`
+				Cardcode           string  `xml:"cardcode,attr"`
+				Account            string  `xml:"account,attr"`
+				Ownerinfo          string  `xml:"ownerinfo,attr"`
+				Exttransactioninfo string  `xml:"exttransactioninfo,attr"`
+				Bsum               string  `xml:"bsum,attr"`
+				Sum                float64 `xml:"sum,attr"`
 			} `xml:"PAYMENT"`
 		} `xml:"CHECKPAYMENTS"`
 		CHECKTAXES []struct {
@@ -152,15 +152,22 @@ type Transaction struct {
 }
 
 type TransactionResult struct {
-	TRRESPONSE struct {
-		ErrorCode   int    `json:"error_code"`
-		ErrText     string `json:"err_text"`
-		TRANSACTION struct {
-			ExtId    string `json:"ext_id"`
-			Num      string `json:"num"`
-			Cardcode string `json:"cardcode"`
-			Slip     string `json:"slip"`
-			Value    string `json:"value"`
-		} `json:"TRANSACTION"`
-	} `json:"TRRESPONSE"`
+	XMLName        xml.Name `xml:"Root"`
+	TransactionsEx struct {
+		Result string `xml:"Result,attr"`
+	} `xml:"TransactionsEx"`
+	OutBuf struct {
+		OutKind    string `xml:"OutKind,attr"`
+		TRRESPONSE struct {
+			ErrorCode   string `xml:"error_code,attr"`
+			ErrText     string `xml:"err_text,attr"`
+			TRANSACTION struct {
+				ExtID    string `xml:"ext_id,attr"`
+				Num      string `xml:"num,attr"`
+				Cardcode string `xml:"cardcode,attr"`
+				Slip     string `xml:"slip,attr"`
+				Value    string `xml:"value,attr"`
+			} `xml:"TRANSACTION"`
+		} `xml:"TRRESPONSE"`
+	} `xml:"OutBuf"`
 }

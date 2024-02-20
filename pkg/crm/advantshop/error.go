@@ -14,11 +14,9 @@ func ErrorWrap(code int, message string) error {
 	if code == http.StatusOK {
 		return nil
 	}
-
 	if code == NotFoundError {
 		return ErrNotFound
 	}
-
 	message = strings.TrimSpace(message)
 	if message == "" {
 		switch code {

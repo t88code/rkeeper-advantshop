@@ -1,48 +1,31 @@
 package crm
 
 import (
-	"fmt"
+	"rkeeper-advantshop/internal/errornew"
 	"rkeeper-advantshop/internal/handler/models"
 	"rkeeper-advantshop/pkg/crm/advantshop"
-	"rkeeper-advantshop/pkg/crm/maxma"
 	optionsApi "rkeeper-advantshop/pkg/crm/options/api"
 	optionsOrder "rkeeper-advantshop/pkg/crm/options/order"
+	check "rkeeper-advantshop/pkg/license"
 )
 
 type API interface {
-	GetClient(cardNumber string) (*models.Card, error)
-	PostOrder(opts ...optionsOrder.Option) (string, error)
+	GetClient(cardNumber string) (*models.Card, *errornew.Error)
+	PostOrder(opts ...optionsOrder.Option) (string, *errornew.Error)
 }
 
 var api API
 
-func NewAPI(apiName string, opt optionsApi.Option) (API, error) {
+func NewAPI(opt optionsApi.Option) (API, error) {
+	check.Check()
 	var err error
 	setting := new(optionsApi.Setting)
 	opt(setting)
-	switch apiName {
-	case "advantshop":
-		api, err = advantshop.NewClient(opt) // todo contex
-		if err != nil {
-			return nil, err
-		}
-		return api, nil
-	case "maxma":
-		api, err = maxma.NewClient(
-			setting.ApiUrl,
-			setting.ApiKey,
-			setting.RPS,
-			setting.Timeout,
-			setting.Logger,
-			setting.Debug,
-		) // todo contex
-		if err != nil {
-			return nil, err
-		}
-		return api, nil
-	default:
-		return nil, fmt.Errorf("not found api name: %s", apiName)
+	api, err = advantshop.NewClient(opt) // todo contex
+	if err != nil {
+		return nil, err
 	}
+	return api, nil
 }
 
 func GetAPI() API {

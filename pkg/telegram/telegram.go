@@ -27,7 +27,7 @@ func SendMessageToTelegramWithLogError(errorText string) {
 	logger.Error(errorText)
 	err = SendMessage(errorText)
 	if err != nil {
-		logger.Errorf("Не удалось отправить сообщение в телеграм: error: %v", err)
+		logger.Errorf("Не удалось отправить сообщение в телеграм: errornew: %v", err)
 		// tODO оправить на почту
 	}
 }
@@ -128,14 +128,14 @@ func CreateDB() error {
 
 	db, err := sql.Open("sqlite3", "telegram.db")
 	if err != nil {
-		errorText := fmt.Sprintf(`failed sql.Open("sqlite3", "telegram.db"), error: %v`, err)
+		errorText := fmt.Sprintf(`failed sql.Open("sqlite3", "telegram.db"), errornew: %v`, err)
 		logger.Fatalf(errorText)
 		return errors.New(errorText)
 	}
 	defer func(db *sql.DB) {
 		err := db.Close()
 		if err != nil {
-			logger.Infof("failed db.Close(), error: %v", err)
+			logger.Infof("failed db.Close(), errornew: %v", err)
 		}
 	}(db)
 
@@ -150,7 +150,7 @@ func CreateDB() error {
 	logger.Info("CreateDB:>Create USERS table...")
 	statement, err := db.Prepare(createUsersTableSQL) // Prepare SQL Statement
 	if err != nil {
-		errorText := fmt.Sprintf("db.Prepare(createUsersTableSQL), error: %v, createUsersTableSQL:\n%s", err, createUsersTableSQL)
+		errorText := fmt.Sprintf("db.Prepare(createUsersTableSQL), errornew: %v, createUsersTableSQL:\n%s", err, createUsersTableSQL)
 		logger.Fatal(errorText)
 		return errors.New(errorText)
 	}
@@ -233,7 +233,7 @@ func GetDbUsers() (map[int64]User, error) {
 	defer func(db *sql.DB) {
 		err := db.Close()
 		if err != nil {
-			logger.Infof("failed db.Close(), error: %v", err)
+			logger.Infof("failed db.Close(), errornew: %v", err)
 		}
 	}(db)
 
@@ -245,7 +245,7 @@ func GetDbUsers() (map[int64]User, error) {
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			logger.Infof("failed rows.Close(), error: %v", err)
+			logger.Infof("failed rows.Close(), errornew: %v", err)
 		}
 	}(rows)
 
@@ -288,13 +288,13 @@ func BotStart(logger *logging.Logger, dbname string, token string, debug bool) {
 	defer func(db *sql.DB) {
 		err := db.Close()
 		if err != nil {
-			logger.Infof("failed db.Close(), error: %v", err)
+			logger.Infof("failed db.Close(), errornew: %v", err)
 		}
 	}(db)
 
 	bot, err = tgbotapi.NewBotAPI(token)
 	if err != nil {
-		logger.Panicf("failed init, error: %v", err)
+		logger.Panicf("failed init, errornew: %v", err)
 	}
 
 	err = tgbotapi.SetLogger(logger)
