@@ -1,12 +1,12 @@
 package models
 
 type FindOwnerByNamePartCards struct {
-	Cards map[string]FindOwnerByNamePartCard `json:"Cards"`
+	Cards map[int64]*FindOwnerByNamePartCard `json:"Cards"`
 }
 
 type FindOwnerByNamePartCard struct {
-	Name        string `json:"Name"`
-	ID          string `json:"ID"`
-	Phone       string `json:"Phone"`
-	HotelNumber string `json:"HotelNumber"`
+	Account  string `json:"Account"` // uint32 // TODO вернуть наормальный тип как в емайл
+	Card     string `json:"Card"`    // int64 // TODO вернуть наормальный тип как в емайл
+	Holder   string `json:"Holder"`  // [40]byte: FIO пользователя
+	HotelNum string `json:"HotelNum"`
 }

@@ -20,7 +20,6 @@ import (
 )
 
 func TransactionsEx(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// TODO несколько транзакций одновременно
 	logger, err := logging.GetLogger("main")
 	if err != nil {
 		return

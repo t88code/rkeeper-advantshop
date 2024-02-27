@@ -15,6 +15,18 @@ import (
 	"time"
 )
 
+// TODO сделать зашифрованный канал
+// сделать файнд майл
+// TODO сделать офлайн
+// TODO сделать получение кодов из окружения и дату окончания
+// TODO сделать лицензию из файла
+// TODO несколько транзакций одновременно
+// TODO обработку отмены транзакции
+// TODO веб морду для облака
+// TODO хранение логов
+// TODO удалить лишние модули
+// TODO проверь лицензии перед отправкой
+
 func main() {
 	loggerMain, err := logging.NewLogger(
 		true,
@@ -98,7 +110,12 @@ func main() {
 	router.GET("/FindOwnerByNamePart", handler.FindOwnerByNamePart)
 	//router.POST("/Update", handler.UpdateDiscount) TODO ручку для обновления скидок-грейдов
 
-	loggerMain.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", cfg.SERVICE.PORT), RequestLogger{h: router, l: loggerMain}))
+	loggerMain.Fatal(
+		http.ListenAndServe(
+			fmt.Sprintf(":%d", cfg.SERVICE.PORT),
+			RequestLogger{h: router, l: loggerMain},
+		),
+	)
 }
 
 type RequestLogger struct {
@@ -122,40 +139,3 @@ func (rl RequestLogger) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	rl.h.ServeHTTP(w, r)
 	rl.l.Printf("Completed %s %s in %v", r.Method, r.URL.Path, time.Since(start))
 }
-
-// todo delete
-//func init() {
-//	logger := logging.GetLogger()
-//
-//	logger.Println("Start main init...")
-//	defer logger.Println("End main init.")
-//	cfg := config.GetConfig()
-//	var err errornew
-//
-//	_ = wooapi.NewAPI(cfg.WOOCOMMERCE.ApiUrl, cfg.WOOCOMMERCE.Key, cfg.WOOCOMMERCE.Secret)
-//
-//	_, err = rk7api.NewAPI(cfg.RK7.ApiUrl, cfg.RK7.User, cfg.RK7.Pass, "REF")
-//	if err != nil {
-//		logger.Fatal("failed main init; rk7api.NewAPI; ", err)
-//	}
-//
-//	_, err = rk7api.NewAPI(cfg.RK7MID.ApiUrl, cfg.RK7MID.User, cfg.RK7MID.Pass, "MID")
-//	if err != nil {
-//		logger.Fatal("failed main init; rk7api.NewAPI; ", err)
-//	}
-//
-//	_, err = cache.NewCacheMenu()
-//	if err != nil {
-//		logger.Error("failed in cache.NewCacheMenu()")
-//	}
-//
-//	if database.Exists(cfg.DBSQLITE.DB) != true {
-//		logger.Info(cfg.DBSQLITE.DB, " not exist")
-//		err := database.CreateDB(cfg.DBSQLITE.DB)
-//		if err != nil {
-//			logger.Fatalf("%s, %v", cfg.DBSQLITE.DB, err)
-//		}
-//	} else {
-//		logger.Info(cfg.DBSQLITE.DB, " exist")
-//	}
-//}

@@ -1,3 +1,3 @@
 package check
 
-var RestCodes = [2]string{"250410002", "199990478"}
+var RestCodesLicense = [3]string{"250410002", "199990478", "476580001"}
